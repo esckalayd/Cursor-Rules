@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [OpenRuna — Cursor rules & skills](https://www.openruna.com/best/cursor-rules-examples) — Searchable catalog with rules, SKILL.md packs, and workflow integrations.
 
 ## How to Use
 
