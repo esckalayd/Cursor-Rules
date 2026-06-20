@@ -1,0 +1,60 @@
+---
+description: Run long GPU jobs on rented/remote instances you don't own (AutoDL, RunPod, vast.ai, Lambda, Paperspace, Slurm/K8s, bare SSH) with billing-safe teardown, spot-preemption resilience, and resumable checkpointing
+globs: ["**/*.py", "**/*.sh", "**/*.yaml", "**/*.yml", "**/Dockerfile", "**/*.slurm"]
+alwaysApply: false
+---
+# Remote GPU Rental Training
+
+Guidance for deploying and babysitting long-running GPU jobs (training, eval, ablation sweeps, batch inference, large data processing) on **rented boxes you do not own**. The core stance: **you are a short-term tenant on someone else's metered machine** — detach the work, make the result outlive the instance, and stop the meter safely. This is *not* about provisioning a cluster.
+
+Platform-agnostic at the core, platform-specific at the edges: the principles and lifecycle below hold on AutoDL, RunPod, vast.ai, Lambda, Paperspace, Chinese platforms (恒源云/矩池云/Featurize/揽睿星舟), and bare SSH / Slurm / K8s. Only the concrete paths, billing verbs, and spot semantics change per platform — confirm those against current docs before betting money or data.
+
+## Operating principles
+
+1. **Minimize paid wall-clock.** The meter runs the whole time. Smoke-test locally on CPU before renting; launch detached; release the instant verification passes.
+2. **Cheap checks before expensive compute.** A 1–2 batch CPU smoke run (logger off) kills import/config/shape bugs for ~free before any GPU spend.
+3. **Trust artifacts you loaded, not log lines that claim success.** "synced/saved/done" lies under a silently-failed write. Gate every success message on the actual copy/save result; reconcile a watcher's own state against the real process/artifact.
+4. **Know what survives stop vs destroy.** Per platform, identify exactly which mount survives a *stop* and which survives a *terminate/destroy*. The data you need often lives on the volatile one — this is the single biggest portability trap.
+5. **Storage fails on the dimension you're not watching.** Disk dies on **inodes** before bytes; the real hog often hides in a symlinked cache. Monitor `df -i`, not just `df -h`. Clean by value: keep tiny evidence, drop big scratch.
+6. **Never mutate inputs under a live run.** A running job (tmux/nohup) holds its script in memory by byte-offset; overwriting it mid-run re-executes blocks. Version filenames instead of editing in place.
+7. **Design for retry.** Failures are probabilistic and transfers are flaky. Make wrappers idempotent + resumable; retry the *identical* config; wrap bulk transfers in `timeout` + resume loops (`rsync --partial`, `hf download --resume`). A mirror/proxy speeds ONE route — validate it on the route the real transfer uses.
+8. **Checkpoint-to-durable + idempotent resume is the universal spine.** Periodic checkpoint to the platform's durable location + unconditional load-latest-on-startup is the one mechanism that survives an SSH drop, a Slurm walltime kill, a K8s reschedule, and a spot preemption. The detach primitive (tmux / sbatch / Job) is swappable; this invariant is not. Write checkpoints atomically (temp file → fsync → rename).
+9. **Cost and destructive actions are the user's call.** Never auto-release/terminate, never delete durable files without explicit confirmation. If cleanup can't free space, ask to expand the disk rather than silently shrink the experiment.
+10. **Teach the platform, don't just drive it.** Surface non-obvious danger clocks up front: a *stopped* box that still bills, auto-release/auto-delete timers on stopped instances, low-balance purges, and which "stop" actually stops the meter.
+
+## Lifecycle (6 phases)
+
+Skip phases already done. Each ends in a runnable check.
+
+- **0 — Environment audit.** Read the platform's storage survival matrix and region lock. Measure live: `df -h && df -i <data-mount>`, cgroup `memory.max`, `nvidia-smi`. Pre-compute the checkpoint disk budget (`ckpt_size × N_kept + scratch`). Verify: expected GPU shows, `df -i` not near 100%.
+- **1 — SSH + credentials.** The prebuilt image / base **is** the env — do not `conda create` on a rental (it burns paid time and can break the image ABI). Push secrets via stdin, never onto a shared/durable filesystem. Verify: `ssh <host> 'python -c "import torch; print(torch.cuda.is_available())"'`.
+- **2 — Wrapper + CPU-smoke gate.** Build an idempotent run wrapper. Size batch/workers to the box for a standalone run, but **pin them across cells for a fair comparison**. Run the cheap CPU smoke locally BEFORE renting (`--limit-batches 2 --epochs 1`, logger off). Verify: smoke exits 0 on 2 batches.
+- **3 — Detached launch.** Launch via the detach primitive (tmux / sbatch / Job); probe briefly (log head + alive + no traceback), then hand back — never a blocking foreground `sleep`. Verify: within 60s the session is alive and the first log line shows the expected step/epoch.
+- **4 — Durable monitoring.** For jobs over ~1–2h, a session-bound watcher alone dies with the session — wire an on-box self-completion signal or a recurring patrol. Classify each failure to a fixed remediation; **never blind-retry**. Verify: the patrol reports even when nothing changed.
+- **5 — Aggregate + verify + teardown.** Checked-sync to durable storage (success line gated on the copy result, principle #3), then **load-and-verify each artifact**, THEN the meter-stopping action.
+
+## Iron Law — teardown gate
+
+No `release` / `terminate` / `destroy` / file-delete until checkpoints are **pulled to local AND verified by load**, and the user has explicitly approved the cost-affecting action. "It looked done in the log" is not evidence. On most platforms the meter-stopping action is **irreversible** (it deletes the disk) — so confirmation matters more, not less.
+
+## Platform gotchas that cost the most GPU-hours
+
+- **"Stop" rarely stops the meter** — usually only `terminate`/`destroy` does, and it's irreversible. AutoDL's 关机 is the exception (stops meter, keeps disk, but auto-releases the instance after ~15 days). Know the verb before you click.
+- **Spot preemption grace is tiny** (~5s, often ~0s on rental platforms; the AWS-style 2-min grace is not universal). A SIGTERM-flush handler is not a safety net — checkpoint on a timer and load-latest unconditionally.
+- **Disk-full crashes `torch.save`** mid-write. Pre-budget; auto-prune `latest.pth`, keep only `best`.
+- **cgroup OOM with no traceback** (bare `Killed` / exit 137) — caused by `num_workers × big-tensor`; size DataLoader workers against `memory.max`, not host CPU count.
+- **Silent sync failure** — `cp … 2>/dev/null; echo synced` lies on a full or inode-exhausted FS. Always gate the success echo on the real exit code.
+- **CRLF breaks `.sh` on Linux** when authored on Windows — add `*.sh text eol=lf` to `.gitattributes`; on-box unblock with `sed -i 's/\r$//' script.sh`.
+- **In China**, set `HF_ENDPOINT=https://hf-mirror.com` and a pip mirror; watch the `no_proxy` trap when a turbo proxy is enabled.
+
+## When training itself breaks (not the platform)
+
+Once the box runs, separate platform ops from model bugs:
+- **CUDA OOM** — fit-it ladder: grad-accum → bf16 → activation checkpointing → `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` → FSDP/ZeRO → CPU/NVMe offload → LoRA/QLoRA.
+- **Multi-GPU hang** — suspect one-rank-diverged, a rank-conditional collective, or a dataloader-length mismatch across ranks; confirm the `torchrun`/`accelerate` env contract.
+- **NaN / loss spike** — fp16 overflow (prefer bf16), missing warmup or grad-clip, bad init; use `torch.autograd.detect_anomaly()` to localize.
+- **Runs but won't learn** — overfit one batch first; check params actually update, the LR/schedule, and loss-function footguns (double-softmax, wrong CE target form).
+- **Whether a metric/ablation delta is *real*** (collapse, data leakage, fair-comparison, significance) is a separate concern — validate it before reporting.
+
+---
+*Distilled from the open-source `remote-gpu-trainer` Agent Skill (MIT): https://github.com/Hanyuyuan6/remote-gpu-trainer — full per-platform profiles, monitoring architecture, and the DL-debug reference layer live there.*
