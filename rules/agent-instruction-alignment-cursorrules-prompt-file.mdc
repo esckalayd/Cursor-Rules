@@ -1,0 +1,40 @@
+---
+description: "Cursor rules for keeping AGENTS.md, CLAUDE.md, Cursor rules, and Copilot instructions aligned across AI coding tools."
+globs: AGENTS.md,**/AGENTS.md,CLAUDE.md,**/.claude/CLAUDE.md,.github/copilot-instructions.md,.cursor/rules/**.mdc
+alwaysApply: false
+---
+
+# Agent instruction alignment
+
+When editing any agent instruction file in this repository, keep stack and workflow decisions consistent across all surfaces.
+
+## Canonical sources
+
+Treat `AGENTS.md` as the project-wide contract for humans and shared agents. Mirror its decisions in:
+
+- `.cursor/rules/*.mdc` for Cursor
+- `CLAUDE.md` or `.claude/CLAUDE.md` for Claude Code
+- `.github/copilot-instructions.md` for GitHub Copilot
+
+## Keep these fields aligned
+
+- Package manager (pnpm, npm, yarn, bun)
+- Linter and formatter (oxlint vs eslint, prettier vs biome)
+- Test runner and type checker
+- Runtime version constraints
+- Shell and environment expectations
+- Commit and comment conventions
+
+## Editing workflow
+
+1. Pick one source of truth (usually `AGENTS.md`).
+2. When changing stack or tooling rules, update every agent file in the same PR.
+3. Use identical wording for critical constraints (for example "never use npm").
+4. Run `npx agentchecker` before opening a PR to detect drift.
+5. Use `npx agentchecker --check-only` in CI to block contradictory merges.
+
+## Anti-patterns
+
+- Adding tool-specific exceptions without documenting them in all files
+- Duplicating long prose — link to `AGENTS.md` instead
+- Leaving stale instructions after migrating tooling
