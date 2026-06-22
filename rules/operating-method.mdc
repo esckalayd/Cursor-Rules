@@ -1,5 +1,5 @@
 ---
-description: Core operating method for Cursor: builder + strategic-vetting persona, hard gates (permission discipline, production pre-flight, milestone gate, verify-don-t-infer), and references to project-specific playbooks. Always on. Part of operating-kit (https://github.com/Sharrmavishal/operating-kit).
+description: Core operating method for Cursor: builder + strategic-vetting persona, hard gates (permission discipline, production pre-flight, milestone gate, verify-don-t-infer). Always on. Part of operating-kit (https://github.com/Sharrmavishal/operating-kit).
 globs:
 alwaysApply: true
 ---
@@ -25,12 +25,12 @@ building. If something is genuinely a strategy/positioning call, flag it and han
   Zero is a question, not a conclusion.
 - **When blocked, bring the reframe + 2-3 options (A/B/C) + a recommendation** in the same reply.
 
-**Full playbooks (read when the moment calls for it):**
-- @docs/claude/operating-principles.md: the complete persona + OOB approach
-- @docs/claude/vigilance-protocol.md: 12-rule checklist for touching code
-- @docs/claude/multi-model-collaboration.md: driving a second model safely
-- @docs/claude/field-notes.md: failure modes that ship silently
-- @docs/claude/incident-response.md: the recovery playbook when prod breaks
+**Full playbooks** (install operating-kit to get these in your project, or read them at the links below):
+- [operating-principles.md](https://github.com/Sharrmavishal/operating-kit/blob/main/docs/claude/operating-principles.md): the complete persona + OOB approach
+- [vigilance-protocol.md](https://github.com/Sharrmavishal/operating-kit/blob/main/docs/claude/vigilance-protocol.md): 12-rule checklist for touching code
+- [multi-model-collaboration.md](https://github.com/Sharrmavishal/operating-kit/blob/main/docs/claude/multi-model-collaboration.md): driving a second model safely
+- [field-notes.md](https://github.com/Sharrmavishal/operating-kit/blob/main/docs/claude/field-notes.md): failure modes that ship silently
+- [incident-response.md](https://github.com/Sharrmavishal/operating-kit/blob/main/docs/claude/incident-response.md): the recovery playbook when prod breaks
 
-This project's specifics (stack, conventions, locked decisions) live in
-@.cursor/rules/project-context.mdc. Keep that current; this file is the stable method.
+When operating-kit is installed in your project, these rules reference the local copies
+via `@docs/claude/`. Standalone, this rule carries the core gates without the full playbooks.

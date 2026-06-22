@@ -12,7 +12,8 @@ Before any non-trivial edit:
 - **3 edits to one file = STOP**: consolidate into one fix and state the invariant it preserves.
 - Trace every write to every reader before changing a field's semantics.
 
-Scan `@docs/claude/field-notes.md` before you deploy, migrate, gate a feature, or trust a build
-artifact. Those are the failures that pass every local test and surface in production.
+Before deploying, migrating, gating a feature, or trusting a build artifact, scan the
+[field-notes](https://github.com/Sharrmavishal/operating-kit/blob/main/docs/claude/field-notes.md)
+for the failure modes that pass every local test and surface in production.
 
 > Tune the `globs` above to this project's actual source directories and file extensions.
