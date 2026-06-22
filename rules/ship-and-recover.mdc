@@ -1,0 +1,19 @@
+---
+description: Deploy discipline and production incident recovery. Enforces test > build > deploy > verify-live sequence and follows the incident response playbook when prod breaks. Pull in when the work is a deploy or an outage. Part of operating-kit (https://github.com/Sharrmavishal/operating-kit).
+globs:
+alwaysApply: false
+---
+
+# Ship & recover (apply when deploying or when prod breaks)
+
+**Deploying:** test > build > deploy > **verify-live**. Confirm the live system actually
+reflects what you shipped (version/health endpoint, real behavior). "The deploy command
+exited 0" is not "it's live and serving the new code". Run a review pass before shipping.
+
+**Production incident:** follow `@docs/claude/incident-response.md` in order:
+stabilize (stop the bleeding) > confirm the recovery point and state it > recover one change at
+a time > verify live > root-cause calmly > ship the **mechanical** fix (a gate, not a promise)
+> one-paragraph postmortem. A panicked fix-forward is what causes incident #2.
+
+Anything touching crash paths, data, schema, auth, billing, or prod state is a
+pause-and-propose gate; see `@docs/claude/multi-model-collaboration.md`.
