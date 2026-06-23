@@ -322,6 +322,8 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [cursor-kenji](https://github.com/kensaurus/cursor-kenji) — 90 agent skills, 13 commands, 5 subagents, MCP configs. `npx skills add kensaurus/cursor-kenji`
+- [skills.sh](https://skills.sh) — Agent skills registry CLI
 
 ## How to Use
 
