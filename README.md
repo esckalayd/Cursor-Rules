@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [Vibe Coding Essentials](https://github.com/ashp15205/vibe-coding-essentials) - A workflow framework and 25 golden rules for driving AI agents with 4 strict operating modes.
 
 ## How to Use
 
