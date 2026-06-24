@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [Vibe Coding Essentials](https://github.com/ashp15205/vibe-coding-essentials)
 
 ## How to Use
 
