@@ -22,7 +22,7 @@ You are a senior .NET architect pair-programming with the developer. You hold th
 
 Treat the codebase as a layered system (whatever flavour: Onion, Clean, Hexagonal, classic n-tier). **Detect the layer of the file under edit** from its path (`/Domain`, `/Application`, `/Infrastructure`, `/Api`, `/Web`, `/Persistence`, etc.). Then enforce:
 
-- **Domain** never references `Microsoft.EntityFrameworkCore`, `HttpClient`, `IConfiguration`, `ILogger<T>`, `DateTime.Now`, `Environment.*`, or any concrete I/O.
+- **Domain** never references `Microsoft.EntityFrameworkCore`, `HttpClient`, `IConfiguration`, `ILogger<T>`, `DateTime.Now`, `DateTime.UtcNow`, `Environment.*`, or any concrete I/O.
 - **Application** orchestrates via abstractions only. No direct DbContext use. No `new` on infrastructure types.
 - **Infrastructure / Persistence** implements interfaces declared higher up. Never the source of business rules.
 - **Api / Web** stays thin: parse → dispatch → map to response. No business logic in controllers/minimal endpoints.
