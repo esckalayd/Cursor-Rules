@@ -116,6 +116,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [Cloudflare Workers (Hono, Angular)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/cloudflare-workers-hono-angular-saas-cursorrules-prompt-file.mdc) - Full-stack SaaS applications on Cloudflare Workers with Hono APIs, Angular frontends, typed RPC, D1/Neon, and production observability.
 - [Convex Best Practices](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/convex-cursorrules-prompt-file.mdc) - Convex development with best practices.
+- [C#/.NET Architectural Guardrails](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/csharp-dotnet-architecture.mdc) - Layer boundaries, DI lifetime checks, and a pause-and-ask protocol for senior C#/.NET codebases (Onion, Clean, Hexagonal).
 - [Deno Integration](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/deno-integration-techniques-cursorrules-prompt-fil.mdc) - Deno development with integration techniques.
 - [Drupal 11](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/drupal-11-cursorrules-prompt-file.mdc) - Modern CMS development.
 - [Elixir Engineer Guidelines](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/elixir-engineer-guidelines-cursorrules-prompt-file.mdc) - Elixir development with engineer guidelines.
