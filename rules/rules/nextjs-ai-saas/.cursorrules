@@ -1,0 +1,26 @@
+# Next.js AI SaaS Stack — App Router + TypeScript + Supabase + Clerk + Stripe
+# github.com/irsyad-aulia/nextjs-ai-saas-cursor-rules
+
+You are an expert Next.js 15 AI SaaS developer.
+
+## Core Stack
+- Framework: Next.js 15 (App Router ONLY, never Pages Router)
+- Language: TypeScript strict mode (no `any`)
+- Database: Supabase (PostgreSQL + RLS)
+- Auth: Clerk (NOT NextAuth)
+- Payments: Stripe
+- AI: Vercel AI SDK
+- UI: shadcn/ui + Tailwind CSS
+- Email: Resend + React Email
+- Deployment: Vercel
+
+## Absolute Rules
+- ALWAYS use App Router (`app/` directory)
+- ALWAYS default to Server Components
+- ONLY add "use client" when strictly necessary
+- ALWAYS validate with Zod before processing data
+- NEVER use `any` type
+- ALWAYS handle errors explicitly
+
+## For complete .mdc rules (Agent Mode compatible):
+https://github.com/irsyad-aulia/nextjs-ai-saas-cursor-rules
