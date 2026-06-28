@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [Skill Hub](https://skill.442595.xyz/) - Multi-platform AI Agent Skills navigator (Claude Code, Codex, Cursor, OpenCode, OpenClaw, Hermes, Copilot, Gemini). Browse 577+ skills by function category. [GitHub](https://github.com/rdone4425/skill)
 
 ## How to Use
 
