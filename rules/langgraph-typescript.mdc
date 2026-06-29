@@ -1,0 +1,100 @@
+---
+description: Best practices for building stateful multi-agent workflows with LangGraph in TypeScript. Apply this rule when creating or modifying AI agent architectures, graph states, nodes, or conditional edges.
+globs: ["**/*.ts", "**/*.tsx"]
+alwaysApply: false
+---
+# LangGraph TypeScript Guidelines
+
+Best practices and patterns for designing robust, type-safe multi-agent systems using LangGraph in TypeScript.
+
+## Core Principles
+
+- **State Immutability:** Treat the graph state as immutable. Nodes must return updates rather than mutating state directly.
+- **Strict Typing:** Always explicitly type your graph state, node inputs/outputs, and edge conditions.
+- **Single Responsibility Nodes:** Each node should do one logical job (e.g., retrieval, formatting, routing).
+- **Explicit Stop Conditions:** Ensure conditional edges always have a guaranteed termination path to prevent infinite execution loops.
+
+## State Definition
+Use the modern `Annotation.define` pattern to establish a type-safe graph state.
+
+```typescript
+import { Annotation } from "@langchain/langgraph";
+import { BaseMessage } from "@langchain/core/messages";
+
+// 1. Define the TypeScript interface representing your state
+export interface AgentState {
+  messages: BaseMessage[];
+  nextStep: string;
+  isCompleted: boolean;
+}
+
+// 2. Define the LangGraph State Annotation
+export const AgentStateAnnotation = Annotation.Root<AgentState>({
+  messages: Annotation<BaseMessage[]>({
+    reducer: (x, y) => x.concat(y),
+    default: () => [],
+  }),
+  nextStep: Annotation<string>({
+    reducer: (x, y) => y ?? x,
+    default: () => "start",
+  }),
+  isCompleted: Annotation<boolean>({
+    reducer: (x, y) => y ?? x,
+    default: () => false,
+  }),
+});
+```
+
+## Node Implementation
+Nodes are async functions that accept the current state and return a partial update to the state.
+
+```typescript
+import { AgentState } from "./state.js";
+
+// Always type node inputs/outputs explicitly
+export async function callModelNode(state: typeof AgentStateAnnotation.State): Promise<Partial<AgentState>> {
+  const { messages } = state;
+  
+  // Implement agent tool call or LLM completion logic here...
+  
+  return {
+    messages: [/* new response message */],
+    nextStep: "verify",
+  };
+}
+```
+
+## Edge and Router Logic
+Conditional edges determine the control flow of your graph dynamically.
+
+```typescript
+import { AgentState } from "./state.js";
+
+// Router determines which node to navigate to next
+export function shouldContinue(state: typeof AgentStateAnnotation.State): "continue" | "end" {
+  if (state.isCompleted || state.messages.length > 10) {
+    return "end";
+  }
+  return "continue";
+}
+```
+
+## Graph Assembly
+Assemble and compile the graph builder into a runnable application.
+
+```typescript
+import { StateGraph } from "@langchain/langgraph";
+import { AgentStateAnnotation, AgentState } from "./state.js";
+import { callModelNode } from "./nodes.js";
+import { shouldContinue } from "./edges.js";
+
+const workflow = new StateGraph(AgentStateAnnotation)
+  .addNode("agent", callModelNode)
+  .addEdge("__start__", "agent")
+  .addConditionalEdges("agent", shouldContinue, {
+    continue: "agent",
+    end: "__end__",
+  });
+
+export const graph = workflow.compile();
+```

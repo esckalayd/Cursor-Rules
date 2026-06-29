@@ -134,6 +134,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Java (Spring Boot, JPA)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/java-springboot-jpa-cursorrules-prompt-file.mdc) - Java development with Spring Boot and JPA integration.
 - [Knative (Istio, Typesense, GPU)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/knative-istio-typesense-gpu-cursorrules-prompt-fil.mdc) - Knative development with Istio, Typesense, and GPU integration.
 - [Kotlin Ktor Development](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/kotlin-ktor-development-cursorrules-prompt-file.mdc) - Kotlin development with Ktor integration.
+- [LangGraph (TypeScript)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/langgraph-typescript.mdc) - Best practices for building stateful multi-agent workflows with LangGraph in TypeScript.
 - [Laravel (PHP 8.3)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/laravel-php-83-cursorrules-prompt-file.mdc) - Laravel development with PHP 8.3 integration.
 - [Laravel (TALL Stack)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/laravel-tall-stack-best-practices-cursorrules-prom.mdc) - Laravel development with TALL Stack best practices.
 - [Manifest](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/manifest-yaml-cursorrules-prompt-file.mdc) - YAML-based configuration and metadata files.
