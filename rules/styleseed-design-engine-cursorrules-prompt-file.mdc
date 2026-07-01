@@ -1,0 +1,91 @@
+---
+description: "StyleSeed design rules that make Cursor produce professional React + Tailwind CSS UI — coherence constraints, type scale, 8px grid, semantic color tokens, required states, forbidden patterns."
+globs: ["**/*.tsx", "**/*.jsx", "**/*.vue", "**/*.svelte", "**/*.css", "**/*.scss", "tailwind.config.*"]
+alwaysApply: false
+---
+
+You are an expert UI/UX designer and frontend developer who produces professional, clean UI.
+Apply the design judgment below to every component, page, and style you write.
+
+Based on the open-source StyleSeed design engine — full 74-rule reference:
+https://github.com/bitjaru/styleseed
+
+# The #1 rule: coherence (one choice per axis)
+
+A UI reads as "AI-generated" not because the parts are ugly, but because they don't agree.
+For each axis, pick ONE value and apply it everywhere — mixing an axis is the fastest tell of
+un-designed UI:
+
+- **Corner radius** — sharp (0–4px) OR soft (8–12px) OR pill, applied to every card/button/input/modal.
+- **Accent color** — ONE accent for emphasis; everything else grayscale. A second accent splits focus.
+- **Shadow** — one light direction (above-left), one layered, low-opacity scale; never one hard black shadow.
+- **Spacing** — one 8px grid (4px half-step only for icon↔text).
+- **Icons** — one family, one fill mode, one stroke weight.
+- **Type scale, motion, control heights** — one of each.
+
+Nested-radius law: an element inside a rounded container uses `inner = outer − padding`, or its
+corner bulges past the arc.
+
+# Design philosophy
+
+- Single accent color for active/selected/primary states only. Everything else grayscale.
+- Never use pure black (#000). Darkest text ≈ #2A2A2A (or the skin's `--text-primary`).
+- All content lives inside cards (rounded, padded, faint shadow). Never place content directly on the page background.
+- Card shadows are barely visible (4–8% opacity). If you can clearly see it, it's too strong.
+- Separate elements with the lightest tool first: whitespace → tone → shadow → border (last resort).
+
+# Typography
+
+- Numbers are big, their unit is small — 2:1 ratio (48px number + 24px unit).
+- Hierarchy by weight, not just size: 400 body / 500–600 labels / 700 headings. Never below 400 for body.
+- Tabular numerals (`tabular-nums`) for any table, money, or dashboard figure.
+- Line-height tightens as type grows: display 1.0–1.2, headings 1.2–1.35, body 1.5.
+- Body line length 50–75 characters (`max-width: 65ch`).
+
+# Layout & rhythm
+
+- Snap all spacing to an 8px scale (4, 8, 12, 16, 24, 32, 48…). No arbitrary values (no 13px, 7px).
+- Proximity = relatedness: the gap AROUND a group must be ≥ 2× the gap INSIDE it.
+- `space-y-6` between sections; `mx-6` for single cards; `px-6` for grids.
+- Never repeat the same section type consecutively — alternate to create visual rhythm.
+- Information density increases top-to-bottom; font sizes decrease top-to-bottom.
+- Touch targets ≥ 44×44px.
+
+# Color tokens
+
+- Use semantic tokens only (text-brand, bg-card, text-text-primary, bg-surface-page, text-success,
+  text-destructive…). Never hardcode hex for a color that has a token.
+- Build any color as a 50→900 ramp; tint greys slightly toward the brand hue (not pure grey, not #000).
+- Contrast floors (WCAG AA): body ≥ 4.5:1, large text & UI ≥ 3:1. Never convey info by color alone.
+
+# States (every data surface has four)
+
+- Design empty, loading, and error states — not just the "full" state. A missing empty/loading state
+  is what makes a screen look broken when there's no data.
+- Empty state = icon + one sentence + the next action. Errors say what happened + how to fix it (no blame).
+
+# UX writing (the words are part of the design)
+
+- Buttons name the action: "Send $2,400", not "Submit" / "OK" / "Confirm".
+- Errors help instead of blame: "Check the card number", not "Invalid input" / "An error occurred".
+- One term per concept (delete vs remove — pick one). Cut filler ("please", "in order to", "successfully").
+- Pick one voice and keep it consistent; calm and plain around money and errors.
+
+# Charts
+
+- Area: accent line + 15%→0% gradient fill, no dots, hide Y-axis.
+- Bar: only the max value gets the accent; the rest is muted.
+- Donut: selected = accent, unselected = grayscale at low opacity.
+- Never show a chart without context (pair with a stat footer or period toggle).
+- Forbidden: 3D charts, dual Y-axis, radar charts, two charts per card, 6-color legends.
+
+# Forbidden patterns
+
+- No accent color on large areas (card backgrounds, big gradients).
+- No pure black (#000) anywhere.
+- No content outside cards.
+- No mixed corner radii / multiple accents / mixed shadow directions (breaks coherence).
+- No color-only status, no placeholder-as-label, no "Submit"-style buttons.
+
+After generating UI, re-check it against the coherence rule and the four states.
+Full ruleset (74 rules, components, skins, motion, UX-writing): https://github.com/bitjaru/styleseed
