@@ -1,0 +1,66 @@
+---
+description: Multi-agent workflow governance with AGENTS.md, task.md, role handoffs, and verification evidence.
+globs: **/*
+alwaysApply: false
+---
+
+# Cosmosmith Multi-Agent Workflow
+
+Use this rule when a project coordinates AI coding work across Cursor, Claude Code, Codex, Copilot, OpenCode, Trae, or similar tools.
+
+## Canonical Rules
+
+- Treat `AGENTS.md` as the canonical project constitution.
+- Treat tool-specific files such as `CLAUDE.md`, `.cursor/rules/*.mdc`, `.github/copilot-instructions.md`, `.opencode/AGENTS.md`, and `.trae/rules/*.md` as adapters.
+- If an adapter conflicts with `AGENTS.md`, follow `AGENTS.md` and update the adapter later.
+
+## Task Protocol
+
+- Use `task.md` as the active task ledger.
+- Claim one small task at a time.
+- Record the role, prompt, context, expected output, harness, loop, and evidence.
+- Do not mark work done until verification evidence is recorded.
+
+## Role Mesh
+
+Use role context deliberately:
+
+- Product: clarify user, job, first slice, and acceptance criteria.
+- Research: gather current competitor, ecosystem, standards, or regulatory evidence when needed.
+- Architect: define boundaries, data flow, risks, and integrations.
+- UI/UX: define flows, states, accessibility, and interaction behavior.
+- Frontend: implement client-side slices and verify browser behavior.
+- Backend: implement APIs, persistence, domain logic, permissions, and contracts.
+- QA: turn acceptance criteria into reproducible evidence.
+- DevOps: verify build, configuration, deployment, monitoring, and rollback.
+- Governance: check rule drift, missing evidence, and incomplete task handoffs.
+
+## Prompt, Context, Harness, Loop
+
+For substantial work, make these explicit:
+
+- Prompt: current instruction and expected output.
+- Context: selected files, specs, research, constraints, and prior decisions.
+- Harness: tests, linters, build commands, browser checks, or review gates.
+- Loop: feedback used before calling the task complete.
+
+## Large Task Ledgers
+
+For large `task.md`, `todo.md`, or checkpoint files:
+
+- Do not load the whole ledger into context unless needed.
+- Select the next claimable task.
+- Summarize only the relevant context.
+- Implement the smallest verifiable slice.
+- Run the harness.
+- Update evidence and status.
+
+## Optional Initializer
+
+This rule is based on the Cosmosmith workflow initializer:
+
+```bash
+npx cosmosmith@latest init --all
+```
+
+Repository: https://github.com/devnomad-byte/cosmosmith
