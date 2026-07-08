@@ -111,6 +111,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Vue 3 (Nuxt 3, TypeScript)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/vue-3-nuxt-3-typescript-cursorrules-prompt-file.mdc) - Vue 3 development with TypeScript integration.
 - [Vue 3 (Composition API)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/vue3-composition-api-cursorrules-prompt-file.mdc) - Vue 3 development with Composition API integration.
 - [Vue/Nuxt Full AI Stack](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/vue-claude-stack.mdc) - Complete AI coding setup for Vue 3 & Nuxt 3 with Cursor Project Rules, CLAUDE.md, Copilot instructions, and generation skills.
+- [Zelda BOTW (Sheikah Slate) UI Style](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/zelda-botw-sheikah-slate-cursorrules-prompt-file.mdc) - Dark Sheikah-slate UI with double borders and cyan glow, backed by the zelda-hyrule-ui React component library.
 
 ### Backend and Full-Stack
 
