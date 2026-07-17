@@ -1,0 +1,25 @@
+---
+description: "Scout a pair of references (near-domain + far-domain) and extract transferable structure before building anything new"
+globs: ["**/*"]
+alwaysApply: false
+---
+# Reference First
+
+Before building anything new, scout references first, then build. Force the step to happen and point the search in a useful direction; which references to pick and what to conclude stays with the user.
+
+## When to trigger
+
+Output a short "Reference Scouting Brief" BEFORE proposing a solution or writing code when: starting a new project or product, adding a new feature, interaction paradigm, or page type, or entering an unfamiliar domain (new algorithm, category, or platform convention).
+
+Do NOT trigger for bug fixes, changes that follow an existing in-project pattern, or pure copy tweaks. When unsure, ask "should we run the reference step this time?" — do not trigger by default.
+
+## The Reference Scouting Brief (5–8 lines, no longer)
+
+1. What type to look for — pick 1–2 based on the core uncertainty: interaction pattern, information architecture, visual style, data structures and algorithms, copy tone, or pricing.
+2. Where to look — comparable products, design libraries, open-source implementations, far-domain analogs.
+3. Find a pair, not one: one near-domain reference plus one far-domain reference; state the analogy logic for the far one ("Y in domain X is structurally the same problem because…").
+4. Comparison questions — what structure do both get right? which parts are transferable principle versus surface style? how have similar products actually fared?
+
+## Discipline
+
+Cap scouting at 2–3 searches; verify references with tools rather than memory; if nothing solid turns up, say so instead of padding. The user can say "skip references" at any time. Before building, compress the findings into 3–5 lines: what to steal, what to avoid, what to deliberately not copy.
