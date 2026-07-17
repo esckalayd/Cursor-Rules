@@ -1,0 +1,43 @@
+---
+description: DesignOS-inspired design intelligence rules for UI craft, project memory, industry context, self-review, accessibility, and honest proof
+globs: ["**/*.tsx", "**/*.jsx", "**/*.vue", "**/*.svelte", "**/*.html", "**/*.css", "**/*.scss", "**/*.mdx"]
+alwaysApply: false
+---
+
+# DesignOS Design Intelligence Rules
+
+Source: https://github.com/ardamoustafa1/DesignOS
+
+## Design Process
+
+- Start UI work by naming the audience, surface type, primary conversion or task, and the trust risk.
+- Load only the relevant design context for the task: foundation, component, pattern, industry, psychology, accessibility, and performance rules.
+- Write down important design decisions so later changes preserve the same brand, spacing, typography, and interaction logic.
+- Treat visual polish as a process outcome, not a final pass.
+
+## UI Craft
+
+- Establish one unmistakable reading order before styling details.
+- Use a restrained type scale, consistent spacing tokens, and a clear foreground/surface/border system.
+- Avoid nested cards, decorative gradients, invented visual clutter, and competing CTAs.
+- Prefer real product states, screenshots, data, or workflow examples over abstract decoration.
+- Make empty, loading, error, disabled, hover, focus, and success states part of the design, not afterthoughts.
+
+## Accessibility
+
+- Meet WCAG AA contrast for body text and controls.
+- Use semantic HTML, labels, keyboard focus, and reduced-motion handling before ARIA patches.
+- Do not communicate status by color alone.
+- If accessibility fails, cap the design score and redo the affected UI.
+
+## Honesty and Proof
+
+- Do not invent testimonials, customer logos, user counts, security badges, benchmarks, or urgency.
+- Replace fake proof with inspectable proof: screenshots, walkthroughs, source links, raw metrics, limitations, or "not measured yet."
+- State caveats near claims, not buried in footnotes.
+
+## Review Gate
+
+- Score the result before shipping: UI craft, UX flow, accessibility, performance, modernity, and conversion.
+- Anything under the agreed bar gets a concrete objection and another pass.
+- Preserve negative findings and fixes in the project notes; they are future design memory.
