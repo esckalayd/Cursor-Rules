@@ -235,6 +235,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Cloudflare Email to Telegram](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/cloudflare-email-telegram-cursorrules-prompt-file.mdc) - Setting up email-to-Telegram forwarding via Cloudflare Email Routing and Workers using the mail2tg CLI.
 - [Netlify](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/netlify-official-cursorrules-prompt-file.mdc) - Official deployment platform integration.
 - [Vercel](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/vercel-deployment-cursorrules-prompt-file.mdc) - Deployment with serverless functions, Edge Runtime, middleware, caching, CI/CD, and production-ready configuration.
+- [HTML To Link](rules/html-to-link-deploy.mdc) - Deploy HTML projects to a live public URL without server setup. Supports anonymous temporary pages and authenticated managed deployments.
 
 ### Build Tools and Development
 
