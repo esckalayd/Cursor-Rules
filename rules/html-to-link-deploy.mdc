@@ -1,0 +1,107 @@
+---
+description: Deploy HTML projects to a live public URL via htmlto.link - packages, uploads, and returns a shareable link without server setup
+globs:
+alwaysApply: false
+---
+
+# HTML To Link - Instant HTML Deployment
+
+You have the ability to deploy the current project to a live public URL using HTML To Link (https://htmlto.link).
+
+## When to use
+
+When the user asks to:
+- Deploy, publish, or host the current project/page
+- Get a shareable link for the current work
+- Put the current HTML/site online
+- Share the current page with others
+
+## Deployment workflow
+
+1. Read `.htmltolink.json` from the project root if it exists.
+   - If it contains `shareUrl` + `updateToken`: update that existing page.
+   - If it contains `shareUrl` + `versionNo` (authenticated): update that managed page.
+   - Otherwise: create a new deployment.
+
+2. Package the project into a ZIP archive. **Always exclude**:
+   - `.htmltolink.json` (contains credentials)
+   - `node_modules`, `.git`, `.next`, `dist`, `.cache`, `.turbo`
+   - `.env`, `.env.*`, `*.pem`, `*.key` (secrets)
+
+3. Call the deploy API:
+
+```bash
+curl -X POST "https://htmlto.link/api/skill/deploy" \
+  -F "file=@<zip-file-path>" \
+  -F "entry_file=index.html" \
+  -F "title=<project-name>"
+```
+
+For authenticated users (when `HTML_TO_LINK_TOKEN` env var exists):
+```bash
+curl -X POST "https://htmlto.link/api/skill/deploy" \
+  -H "Authorization: Bearer $HTML_TO_LINK_TOKEN" \
+  -F "file=@<zip-file-path>" \
+  -F "entry_file=index.html" \
+  -F "title=<project-name>" \
+  -F "share_url=<existing-shareUrl>"
+```
+
+For anonymous updates (reusing project-owned temporary page):
+```bash
+curl -X POST "https://htmlto.link/api/skill/deploy" \
+  -F "file=@<zip-file-path>" \
+  -F "entry_file=index.html" \
+  -F "title=<project-name>" \
+  -F "share_url=<shareUrl from .htmltolink.json>" \
+  -F "update_token=<updateToken from .htmltolink.json>"
+```
+
+4. After success, create or update `.htmltolink.json` in the project root:
+
+Anonymous mode:
+```json
+{
+  "shareUrl": "https://htmlto.link/xxxxxxxx",
+  "updateToken": "<from API response>",
+  "temporary": true,
+  "expiresAt": "<from API response>"
+}
+```
+
+Authenticated mode:
+```json
+{
+  "shareUrl": "https://htmlto.link/xxxxxxxx",
+  "versionNo": "<from API response>"
+}
+```
+
+5. Ensure `.gitignore` contains `.htmltolink.json`.
+
+6. Return **only** the final share URL to the user. Never expose `updateToken`.
+
+## Important rules
+
+- Never display or log the `updateToken` value to the user.
+- Never include `.htmltolink.json` in the upload ZIP.
+- If the entry HTML file is ambiguous, ask the user which file to use.
+- Anonymous deployments last 24 hours; updating resets the timer.
+- The API returns JSON with `shareUrl`, and optionally `updateToken`, `expiresAt`, `versionNo`.
+
+## MCP Server (alternative)
+
+For native tool integration, users can add the MCP server instead:
+
+```json
+{
+  "mcpServers": {
+    "htmltolink": {
+      "command": "npx",
+      "args": ["-y", "htmltolink-mcp"]
+    }
+  }
+}
+```
+
+GitHub: https://github.com/licc168/htmltolink-mcp
