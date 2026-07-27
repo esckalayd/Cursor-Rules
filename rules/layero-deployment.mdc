@@ -1,0 +1,108 @@
+---
+description: "Deploying static sites and SPAs to Layero from the agent terminal, driving the CLI through its JSON-lines event stream"
+globs: package.json, vite.config.*, next.config.*, astro.config.*, nuxt.config.*, svelte.config.*, **/.layero/project.json
+alwaysApply: false
+---
+# Layero Deployment
+
+Layero is a deployment platform for static sites and SPAs with build servers
+and CDN located inside Russia. It ships a local directory — a git repository
+is not required.
+
+Trigger this procedure when the user asks to deploy, publish or ship the
+project and mentions Layero.
+
+## Deploy
+
+Run from the project root:
+
+```bash
+npx layero@latest deploy --json
+```
+
+`--json` switches the CLI to JSON-lines output — one JSON object per line on
+stdout. Parse the stream rather than scraping human-readable text.
+
+If the directory has no `.layero/project.json`, run `npx layero init` first.
+It detects the framework, writes the config, and appends a rules block to
+`AGENTS.md` so later sessions follow the same procedure.
+
+## What not to do
+
+- Do not run `git init` or push to GitHub first. Git is optional here; the
+  unit of deployment is a directory.
+- Do not run `npm install -g layero`. Global installs fail in sandboxed agent
+  terminals. Use `npx layero@latest`, or `npm install -D layero`.
+- Do not open the dashboard to "finish setup". The CLI does everything
+  inline; there has been no browser setup wizard since v0.5.0.
+- Do not pass `--provider` to `layero login`. The flag was removed in v0.5.x;
+  the provider is chosen in the browser.
+- Do not assume a plain `layero deploy` is a safe preview. For a project
+  created from the CLI it is **not**: direct uploads auto-promote, so every
+  deploy replaces what visitors see at the project's public address — the same
+  `ready.url` the previous deploy printed. `--prod` matters only for projects
+  with a connected git repository, where it targets the production environment.
+- Do not offer `--branch` as a way to publish somewhere isolated. The flag is
+  accepted and silently ignored for direct uploads — the backend files every
+  archive deploy under the reserved `cli` environment. Isolated previews come
+  from pushing to a branch of a connected repository, nothing else. If the
+  user wants a version "just to look at", say that it needs a repository.
+
+## Events to handle
+
+```
+auth_required, authorized, project_created, project_linked, detected,
+packing, uploading, uploaded, setup_applied, deploy_started, stage,
+build_log, ready, error
+```
+
+- `auth_required` carries `url` and `user_code`. Render the URL as a
+  clickable link. The user signs in once; the CLI's poll loop picks up the
+  token within about two seconds and caches it in `~/.layero/config.json`.
+  There is no localhost callback, so the browser may be on a different
+  machine than the terminal — this works from SSH, Docker and sandboxes.
+- `detected` is informational: framework, build command, output directory.
+  Do not override detection unless it is demonstrably wrong.
+- `build_log` is raw build output. Forward it only when it contains errors.
+- `ready` carries `url` — the live address. Show it as-is. **Never construct
+  the hostname from a template**: addresses live in a dedicated zone and
+  organizations migrate between schemes, so a guessed host will be wrong.
+  `preview_url` and `edge_ready` are legacy fields; do not gate on them.
+- `error` carries a stable `code` and a `next_action` hint. Follow
+  `next_action`. The codes the CLI actually emits are `auth_required`,
+  `auth_expired`, `auth_timeout`, `project_unknown`, `project_not_found`,
+  `cli_deploys_disabled`, `invalid_type`, `prebuilt_no_dir`,
+  `prebuilt_no_index`, `deploy_not_started`, `deploy_failed` and `internal`.
+  The failure code is assembled as `deploy_<status>` and the only failing
+  statuses are `failed` and `cancelled`, so `deploy_error` and
+  `deploy_timed_out` never occur.
+
+## Redeploying
+
+Run the same command again. The first deploy creates the project, later ones
+reuse it. No commit is needed between runs.
+
+## CI
+
+Browser sign-in cannot work on a runner. Pipelines use a long-lived token
+created in the dashboard and passed through the environment:
+
+```bash
+LAYERO_TOKEN=... npx layero@latest deploy --project my-site --json --yes
+```
+
+`LAYERO_TOKEN` takes priority over a cached local login, which matters on a
+developer machine that is signed in to a different account. `--yes` skips the
+confirmation prompt that would otherwise wait forever with no one to answer
+it. Keep `--json` here too: a runner has no one reading the terminal, and the
+`ready` / `error` events are what a pipeline step can actually branch on.
+
+Pass `--project` in a pipeline, not `--name`. `--name` only labels a project
+at creation, so a repeated pipeline run without a link creates a **new**
+project every time instead of updating one.
+
+## Reference
+
+- CLI package: <https://www.npmjs.com/package/layero>
+- JSON event schema: <https://docs.layero.ru/en/cli/json-events>
+- Agent guide: <https://docs.layero.ru/en/cli/agents>
