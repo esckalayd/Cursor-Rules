@@ -313,6 +313,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [DevSecOps, SSDLC, and AppSec](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/security-devsecops-ssdls-appsec.mdc) - Secure coding, secret handling, dependency hygiene, authentication, authorization, security testing, and compliance documentation.
 
 ### Documentation
+- [Vibe-Coding SOP](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/vibe-coding-sop-cursorrules-prompt-file.mdc) - A 5-stage standard operating procedure for AI-assisted coding (requirements to tech eval to development to testing to review) with a safety gate that blocks file writes until the plan is approved, plus a reusable design system to keep generated UI consistent.
 
 - [Gherkin Style Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/gherkin-style-testing-cursorrules-prompt-file.mdc) - Behavior-driven scenarios and acceptance criteria.
 - [How-To Documentation](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/how-to-documentation-cursorrules-prompt-file.mdc) - Task-oriented guides and procedural documentation.
