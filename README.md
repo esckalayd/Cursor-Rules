@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [BundleDex](https://bundledex.net) — Open Knowledge Format (OKF) bundle directory: 409 bundles, 3,889★, 177 OKF-conformant, MCP tools, API, llms.txt. Includes an AGENTS.md vs Cursor Rules vs OKF comparison guide.
 
 ## How to Use
 
