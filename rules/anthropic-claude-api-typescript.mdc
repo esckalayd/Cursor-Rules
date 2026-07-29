@@ -1,0 +1,115 @@
+---
+description: Anthropic Claude API integration with streaming responses, tool use, and production-grade error handling for TypeScript and Next.js
+globs: **/claude.ts, **/anthropic.ts, **/api/chat/route.ts, **/*.ts
+alwaysApply: false
+---
+
+# Anthropic Claude API — TypeScript / Next.js
+
+## Client Setup
+```ts
+import Anthropic from "@anthropic-ai/sdk"
+
+// Singleton — reuse across requests
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+})
+```
+
+## Basic Message
+```ts
+const message = await anthropic.messages.create({
+  model: "claude-opus-4-6",
+  max_tokens: 1024,
+  messages: [
+    { role: "user", content: "Explain this code: ..." }
+  ],
+})
+
+const text = message.content[0].type === "text" ? message.content[0].text : ""
+```
+
+## Streaming (Next.js Edge)
+```ts
+// app/api/chat/route.ts
+import Anthropic from "@anthropic-ai/sdk"
+
+export const runtime = "edge"
+
+export async function POST(req: Request) {
+  const { messages } = await req.json()
+
+  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
+  const stream = anthropic.messages.stream({
+    model: "claude-opus-4-6",
+    max_tokens: 2048,
+    system: "You are a helpful assistant.",
+    messages,
+  })
+
+  return new Response(stream.toReadableStream(), {
+    headers: { "Content-Type": "text/event-stream" },
+  })
+}
+```
+
+## Tool Use
+```ts
+const response = await anthropic.messages.create({
+  model: "claude-opus-4-6",
+  max_tokens: 1024,
+  tools: [{
+    name: "get_weather",
+    description: "Get current weather for a location",
+    input_schema: {
+      type: "object",
+      properties: {
+        location: { type: "string", description: "City name" },
+      },
+      required: ["location"],
+    },
+  }],
+  messages: [{ role: "user", content: "What is the weather in Paris?" }],
+})
+```
+
+## System Prompts
+```ts
+const system = `You are [role].
+
+Your task: [specific task]
+
+Rules:
+- [rule 1]
+- [rule 2]
+
+Output format: [format]`
+```
+
+## Error Handling
+```ts
+try {
+  const message = await anthropic.messages.create(...)
+} catch (err) {
+  if (err instanceof Anthropic.APIStatusError) {
+    if (err.status === 429) { /* rate limited — backoff and retry */ }
+    if (err.status === 529) { /* overloaded — retry with exponential backoff */ }
+  }
+  throw err
+}
+```
+
+## Model Selection
+- claude-haiku-4-5-20251001: fast and cheap, good for classification, short tasks
+- claude-sonnet-4-6: balanced speed/intelligence for most tasks
+- claude-opus-4-6: maximum intelligence for complex reasoning
+
+## Rules
+- Always set max_tokens explicitly — the default may truncate responses
+- Use a singleton client instance, not a new one per request
+- Handle 429 (rate limit) and 529 (overloaded) with exponential backoff
+- Monitor usage.input_tokens + usage.output_tokens per request for cost control
+- Trim conversation history before sending — avoid token bloat on long sessions
+- Never hardcode API keys — use process.env.ANTHROPIC_API_KEY
+- Do not use deprecated claude-1 or claude-2 model IDs

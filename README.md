@@ -114,6 +114,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 ### Backend and Full-Stack
 
+- [Anthropic Claude API (TypeScript, Next.js)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/anthropic-claude-api-typescript.mdc) - Claude API integration with streaming responses, tool use, model selection guide, and production-grade error handling with exponential backoff.
 - [Cloudflare Workers (Hono, Angular)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/cloudflare-workers-hono-angular-saas-cursorrules-prompt-file.mdc) - Full-stack SaaS applications on Cloudflare Workers with Hono APIs, Angular frontends, typed RPC, D1/Neon, and production observability.
 - [Convex Best Practices](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/convex-cursorrules-prompt-file.mdc) - Convex development with best practices.
 - [Deno Integration](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/deno-integration-techniques-cursorrules-prompt-fil.mdc) - Deno development with integration techniques.
@@ -208,6 +209,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Snowflake Cortex AI](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/snowflake-cortex-ai-cursorrules-prompt-file.mdc) - AI_COMPLETE, AI_CLASSIFY, AI_EXTRACT, Cortex Search, and RAG applications.
 - [Snowflake Data Engineering](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/snowflake-data-engineering-cursorrules-prompt-file.mdc) - Snowflake SQL, data pipelines (Dynamic Tables, Streams, Tasks, Snowpipe), semi-structured data, Snowflake PostgreSQL, and cost optimization.
 - [Snowflake Snowpark Python & dbt](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/snowflake-snowpark-dbt-cursorrules-prompt-file.mdc) - Snowpark Python (DataFrames, UDFs, stored procedures) and dbt with the Snowflake adapter.
+- [Stripe (Next.js, TypeScript)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/stripe-integration-nextjs-typescript.mdc) - Secure checkout sessions, idempotent webhook verification with signature validation, subscription lifecycle handling, and customer portal.
 - [TypeScript (Axios)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/typescript-axios-cursorrules-prompt-file.mdc) - TypeScript development with Axios integration.
 
 ### Testing
@@ -322,6 +324,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [Cursor Rules & AI Coding Config Pack](https://moukie76.github.io/cursor-rules-free/) - 27 production-ready rules for 16 stacks: Next.js, React, Python FastAPI, Go, Stripe, Anthropic Claude, Tailwind, Docker, and more.
 
 ## How to Use
 
