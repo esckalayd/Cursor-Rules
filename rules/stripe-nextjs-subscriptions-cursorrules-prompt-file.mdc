@@ -1,0 +1,113 @@
+---
+description: Stripe subscriptions with Next.js — checkout sessions, webhook handling with signature verification, customer portal, and idempotent event processing.
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+# Stripe Subscriptions — Next.js
+
+## Stack
+`stripe` Node.js SDK, TypeScript, Next.js
+
+## Client Setup
+```ts
+// lib/stripe.ts
+import Stripe from "stripe"
+
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2024-12-18.acacia",
+  typescript: true,
+})
+```
+
+## Checkout Session
+```ts
+export async function createCheckoutSession({
+  priceId,
+  userId,
+  successUrl,
+  cancelUrl,
+}: {
+  priceId: string
+  userId: string
+  successUrl: string
+  cancelUrl: string
+}) {
+  return stripe.checkout.sessions.create({
+    mode: "subscription",
+    payment_method_types: ["card"],
+    line_items: [{ price: priceId, quantity: 1 }],
+    success_url: successUrl,
+    cancel_url: cancelUrl,
+    metadata: { userId },
+    subscription_data: { metadata: { userId } },
+  })
+}
+```
+
+## Webhooks — Critical Pattern
+```ts
+// app/api/stripe/webhook/route.ts
+import { headers } from "next/headers"
+
+export async function POST(req: Request) {
+  const body = await req.text()              // raw body — never parse as JSON first
+  const signature = headers().get("stripe-signature")!
+
+  let event: Stripe.Event
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    )
+  } catch {
+    return new Response("Webhook signature verification failed", { status: 400 })
+  }
+
+  // Handle events idempotently
+  switch (event.type) {
+    case "checkout.session.completed": {
+      const session = event.data.object as Stripe.Checkout.Session
+      await handleCheckoutComplete(session)
+      break
+    }
+    case "customer.subscription.deleted": {
+      const sub = event.data.object as Stripe.Subscription
+      await handleSubscriptionCancelled(sub)
+      break
+    }
+  }
+
+  return new Response("ok")
+}
+```
+
+## Webhook Rules
+- **Idempotent**: webhook can fire multiple times — check if already processed
+- **Fast**: return 200 immediately, process async if needed
+- **Handle all lifecycle events**: `checkout.session.completed`, `invoice.payment_succeeded`, `customer.subscription.updated`, `customer.subscription.deleted`
+
+## Customer Portal
+```ts
+export async function createPortalSession(customerId: string, returnUrl: string) {
+  return stripe.billingPortal.sessions.create({
+    customer: customerId,
+    return_url: returnUrl,
+  })
+}
+```
+
+## Environment Variables
+```env
+STRIPE_SECRET_KEY=sk_live_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_STRIPE_PRICE_ID=price_...
+```
+
+## Don'ts
+- Don't trust `amount_total` from the client — verify server-side via webhook
+- Don't store raw card data — let Stripe handle it
+- Don't skip webhook signature verification
+- Don't use test keys in production
