@@ -1,0 +1,114 @@
+---
+description: TypeScript integration with Anthropic Claude API — singleton client, messages, streaming (Next.js Edge), tool use, and rate-limit error handling.
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+# Anthropic Claude API — TypeScript
+
+## Stack
+`@anthropic-ai/sdk`, TypeScript, Node.js or Next.js
+
+## Client Setup
+```ts
+import Anthropic from "@anthropic-ai/sdk"
+
+// Singleton — reuse across requests
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+})
+```
+
+## Basic Message
+```ts
+const message = await anthropic.messages.create({
+  model: "claude-opus-4-6",
+  max_tokens: 1024,
+  messages: [
+    { role: "user", content: "Explain this code: ..." }
+  ],
+})
+
+const text = message.content[0].type === "text" ? message.content[0].text : ""
+```
+
+## Streaming (Next.js Edge Route)
+```ts
+// app/api/chat/route.ts
+import Anthropic from "@anthropic-ai/sdk"
+
+export const runtime = "edge"
+
+export async function POST(req: Request) {
+  const { messages } = await req.json()
+  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
+  const stream = anthropic.messages.stream({
+    model: "claude-opus-4-6",
+    max_tokens: 2048,
+    system: "You are a helpful assistant.",
+    messages,
+  })
+
+  return new Response(stream.toReadableStream(), {
+    headers: { "Content-Type": "text/event-stream" },
+  })
+}
+```
+
+## System Prompts
+```ts
+const system = `You are [role].
+
+Your task: [specific task]
+
+Rules:
+- [rule 1]
+- [rule 2]
+
+Output format: [format]`
+```
+
+## Tool Use
+```ts
+const response = await anthropic.messages.create({
+  model: "claude-opus-4-6",
+  max_tokens: 1024,
+  tools: [{
+    name: "get_weather",
+    description: "Get current weather for a location",
+    input_schema: {
+      type: "object",
+      properties: {
+        location: { type: "string", description: "City name" },
+      },
+      required: ["location"],
+    },
+  }],
+  messages: [{ role: "user", content: "What's the weather in Paris?" }],
+})
+```
+
+## Error Handling
+```ts
+try {
+  const message = await anthropic.messages.create(...)
+} catch (err) {
+  if (err instanceof Anthropic.APIStatusError) {
+    if (err.status === 429) // rate limited — exponential backoff
+    if (err.status === 529) // overloaded — retry with backoff
+  }
+  throw err
+}
+```
+
+## Token Management
+- Set `max_tokens` explicitly — default may be too low
+- Use `claude-haiku-4-5-20251001` for fast/cheap tasks, `claude-opus-4-6` for complex reasoning
+- Monitor `usage.input_tokens` + `usage.output_tokens` for cost control
+
+## Don'ts
+- Don't hardcode the API key — use environment variables
+- Don't use deprecated `claude-1` or `claude-2` models
+- Don't ignore rate limit errors — implement exponential backoff
+- Don't send unbounded conversation history — trim to control token costs
