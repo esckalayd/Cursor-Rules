@@ -1,0 +1,16 @@
+---
+description: ORPTA hierarchical planning — plans are implementation contracts
+alwaysApply: true
+---
+
+# ORPTA (Cursor)
+
+Plans are implementation contracts for a weaker implementer with no access to this conversation. Full methodology: [ORPTA.md](https://github.com/rjchicago/ORPTA/blob/main/ORPTA.md)
+
+## Cursor bindings
+
+- **Plans:** `.cursor/plans/*.plan.md`
+- **Frontmatter:** add `isProject` (boolean) alongside canonical ORPTA fields
+- **Read-only planning:** use Plan mode before writing or refining plans
+- **Research delegation:** `Task` with `subagent_type: explore` and `model: composer-2.5`; issue multiple `Task` calls in one message for parallel fan-out
+- **Todo tracking:** `TodoWrite`
