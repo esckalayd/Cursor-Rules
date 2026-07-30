@@ -1,6 +1,6 @@
 ---
 description: "Cursor rules for Helium Mcp."
-globs: **/*
+globs: '**/*'
 alwaysApply: false
 ---
 # Helium MCP in Cursor
