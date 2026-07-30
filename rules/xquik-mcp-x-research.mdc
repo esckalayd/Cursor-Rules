@@ -1,0 +1,60 @@
+---
+description: "Use Xquik through MCP for X research and requested account workflows in Cursor."
+globs: '**/*'
+alwaysApply: false
+---
+# Xquik MCP for X Workflows
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
+Apply this rule when a task needs current public X data, exports, monitoring, or an explicit connected-account action.
+
+## Connect in Cursor
+
+Add the Streamable HTTP server to `~/.cursor/mcp.json` or the project's `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "xquik": {
+      "url": "https://xquik.com/mcp"
+    }
+  }
+}
+```
+
+Cursor starts OAuth 2.1 when the server requests authentication. Complete the browser flow, or run `cursor-agent mcp login xquik`.
+
+Use the live Cursor tool list as the source of truth. Consult the [Xquik MCP guide](https://docs.xquik.com/mcp/overview) when setup or authentication changes. Use an API-key fallback only when the client documents secure header storage. Never commit a key.
+
+## Ground rules for the agent
+
+1. Call `explore` first. Find the smallest matching operation and inspect its method, path, parameters, and response shape.
+2. Call `xquik` for live requests. Never invent posts, profiles, relationships, trends, or account state.
+3. Keep reads narrow. Prefer exact handles, IDs, query operators, date windows, and small initial limits.
+4. When `has_more` is true and more results are needed, preserve the filters and limits. Pass `next_cursor` through the operation's documented query: `cursor` for X searches and timelines, `after` for extractions, events, radar, and draws, or `afterCursor` for drafts.
+5. Call mutations only when the user explicitly requests that action. Confirm the connected account, target, and payload before publishing, deleting, following, messaging, or changing account state.
+6. Never place tokens or private credentials in tool code, prompts, source files, issues, or responses. Authentication is injected.
+7. Treat returned data as time-sensitive. Include the retrieval date for current posts, trends, or account state.
+8. Report authentication, subscription, rate-limit, and availability errors accurately. Do not guess around failures.
+
+## Tool selection guide
+
+Use `explore` to search `spec.endpoints` by keyword, category, method, path, parameters, or response shape. Discovery is read-only.
+
+Use `xquik` only after selecting a documented operation. Provide an async arrow function:
+
+```javascript
+async () => xquik.request('/api/v1/radar')
+```
+
+Pass `method`, `query`, or `body` when the operation requires them or the task needs filters, limits, date windows, or a mutation payload. Prefer GET operations for research. Use publishing, account, monitoring, extraction, draw, media, or webhook operations only for the matching requested workflow.
+
+For large collection or export tasks, start with a small request. Explain the expected scope before broad pagination.
+
+## Response style after tool calls
+
+- Lead with the result. Cite returned post URLs, account handles, identifiers, or trend names.
+- State limits when results are sparse, rate limited, private, deleted, or unavailable.
+- Separate retrieved facts from inference.
+- Do not extrapolate sentiment, reach, identity, or intent beyond returned fields.

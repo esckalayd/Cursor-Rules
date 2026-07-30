@@ -209,6 +209,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Snowflake Data Engineering](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/snowflake-data-engineering-cursorrules-prompt-file.mdc) - Snowflake SQL, data pipelines (Dynamic Tables, Streams, Tasks, Snowpipe), semi-structured data, Snowflake PostgreSQL, and cost optimization.
 - [Snowflake Snowpark Python & dbt](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/snowflake-snowpark-dbt-cursorrules-prompt-file.mdc) - Snowpark Python (DataFrames, UDFs, stored procedures) and dbt with the Snowflake adapter.
 - [TypeScript (Axios)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/typescript-axios-cursorrules-prompt-file.mdc) - TypeScript development with Axios integration.
+- [Xquik MCP for X Workflows](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/xquik-mcp-x-research.mdc) - X research and requested account workflows through Xquik's remote MCP server.
 
 ### Testing
 
