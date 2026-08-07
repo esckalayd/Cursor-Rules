@@ -311,6 +311,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 ### Security
 
 - [DevSecOps, SSDLC, and AppSec](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/security-devsecops-ssdls-appsec.mdc) - Secure coding, secret handling, dependency hygiene, authentication, authorization, security testing, and compliance documentation.
+- [Tuurio ID OIDC Authentication](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/tuurio-id-oidc-authentication.mdc) - Integrate browser, mobile, and server-side applications with OIDC, PKCE, secret handling, callback safety, token expiration, and verified sign-in and sign-out flows.
 
 ### Documentation
 
