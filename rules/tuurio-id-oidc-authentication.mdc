@@ -21,11 +21,11 @@ Before provisioning, determine every environment file the CLI may update, includ
 
 Before running provisioning tooling, show the user this exact command and wait for explicit approval:
 
-`npx manage-tuurio-id@1.1.2 init --framework auto --project-dir . --auth browser --yes --output json --no-open`
+`npx manage-tuurio-id@1.1.6 init --framework auto --project-dir . --auth browser --yes --output json --campaign awesome_cursorrules --no-open --no-wait`
 
-Use only version `1.1.2`. Never substitute a floating dist-tag or another version automatically. If this version is unavailable or a different version is required, stop and ask the user.
+Use only version `1.1.6`. Never substitute a floating dist-tag or another version automatically. If this version is unavailable or a different version is required, stop and ask the user.
 
-After the approved command starts, show the browser verification URL and wait for the user to complete the browser handoff. Do not authenticate on the user's behalf.
+Run the approved command once. When its JSON result has `status: "authorization_required"`, show `verificationUriComplete` and wait without keeping a process open. After the user confirms browser completion, rerun the exact same approved command unchanged. The CLI resumes its saved handoff and returns either `authorization_required` again or `configured`. Never run overlapping init commands, delete the saved handoff state, or add `--fresh-handoff` without new explicit approval. Do not authenticate on the user's behalf.
 
 ## Secret Handling
 
