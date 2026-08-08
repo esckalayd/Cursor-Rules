@@ -263,6 +263,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [TypeScript Code Convention](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/typescript-code-convention-cursorrules-prompt-file.mdc) - TypeScript development with code convention integration.
 - [VSCode Extension (Electron/TypeScript)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/vscode-extension-dev-typescript-cursorrules-prompt-file.mdc) - VSCode extension development with Electron and TypeScript integration.
 - [Web App Optimization](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/web-app-optimization-cursorrules-prompt-file.mdc) - Web app development with optimization integration.
+- [What It Does (Behaviour Scanner)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/what-it-does.mdc) - Comparing an application's behaviour before and after an edit — entry points, the data each one touches, and whether an authorization check disappeared. Next.js App Router and Cloudflare Pages Functions.
 - [Ankra CLI (Kubernetes Cluster Management)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/ankra-cli.mdc) - Ankra CLI development with Kubernetes cluster management integration.
     
 ### Language-Specific
