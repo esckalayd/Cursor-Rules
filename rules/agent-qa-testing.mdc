@@ -1,0 +1,48 @@
+---
+description: "Operate Agent QA from Cursor for evidence-led web and mobile testing, result triage, and scoped fixes."
+globs: ["agent-qa.config.yaml", "tests/**/*.yaml", "suites/**/*.suite.yaml", "hooks.yaml", ".agent-qa/**/*"]
+alwaysApply: false
+---
+
+# Agent QA Testing
+
+Use this rule when the user asks to operate [Agent QA](https://github.com/vostride/agent-qa) or the repository already contains a configured Agent QA workspace. Agent QA is an open-source QA agent with a CLI, MCP server, dashboard, and portable Agent Skills.
+
+## Establish the Integration
+
+1. Read the repository's testing instructions and locate its Agent QA configuration before running anything.
+2. Read any existing MCP configuration and use its exact command, arguments, environment, and transport. Do not replace configured values with a guessed `agent-qa mcp` command.
+3. If MCP is unavailable but Agent QA is installed locally, identify the repository's package manager and use its local-package runner to invoke `agent-qa --help`. Do not install or download a different version implicitly, and do not invent flags or subcommands.
+4. Do not initialize, overwrite, or migrate a workspace unless the user requested it and the resulting file changes are understood.
+
+## Testing Workflow
+
+1. Translate the requested behavior into observable user outcomes, including the important success path and a small number of meaningful failure paths.
+2. Reuse existing tests and project conventions before creating new coverage.
+3. Keep test data deterministic and avoid real production accounts, secrets, payments, or destructive actions.
+4. Redact credentials, authorization headers, cookies, tokens, email addresses, personal data, and other sensitive values from screenshots, traces, console or network evidence, and reports before saving or sharing them.
+5. Run the narrowest relevant Agent QA test first. Expand the run only when the initial evidence justifies it.
+6. Capture the exact result, failing step, screenshot or trace reference, and relevant console or network evidence.
+
+## Triage Before Editing
+
+Classify a failure before changing code or tests:
+
+- **Product defect**: the application violates the expected user outcome.
+- **Test defect**: the test has a stale assumption, selector, assertion, or setup.
+- **Environment issue**: the target, dependency, data, credential, device, or browser is unavailable.
+- **Inconclusive**: the evidence is insufficient or contradictory.
+
+Do not label every failed run as a product bug. If Agent QA self-heals a test, inspect the proposed change and confirm that it preserves the intended behavior rather than merely making the test pass.
+
+## Scoped Fixes
+
+- Change application code only for an evidenced product defect.
+- Change test code only for an evidenced test defect.
+- Preserve unrelated behavior and existing repository conventions.
+- Ask before broad dependency upgrades, schema changes, destructive data operations, or changes that weaken assertions.
+- Re-run the smallest failing test after a fix, then run the relevant surrounding suite when practical.
+
+## Reporting
+
+Report the command or MCP operation used, the target environment, observed outcome, evidence, classification, files changed, and validation performed. Distinguish facts from hypotheses and never claim a test passed without a completed result.

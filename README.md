@@ -212,6 +212,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 ### Testing
 
+- [Agent QA Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/agent-qa-testing.mdc) - Evidence-led Agent QA workflows for natural-language test authoring, execution, failure triage, self-heal review, and scoped fixes.
 - [Cypress API Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/cypress-api-testing-cursorrules-prompt-file.mdc) - Cypress development with API testing.
 - [Cypress Accessibility Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/cypress-accessibility-testing-cursorrules-prompt-file.mdc) - Cypress development with accessibility testing.
 - [Cypress Defect Tracking](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/cypress-defect-tracking-cursorrules-prompt-file.mdc) - Cypress development with defect tracking.
