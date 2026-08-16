@@ -1,12 +1,14 @@
 ---
 description: Apply UIZZE's anti-UI-slop design contract and finish gate to frontend work
 globs: "**/*.{tsx,ts,jsx,js,css,scss,html}"
-alwaysApply: true
+alwaysApply: false
 ---
 
 Before editing UI, apply the free UIZZE anti-UI-slop workflow from
 https://github.com/uizze/uizze/tree/main/skills/anti-ui-slop and read the
 project's existing design contract when one exists.
+If browsing is unavailable, ask the user for two or three UIZZE links or
+screenshots and continue without blocking the work.
 
 - Preserve one primary user job and one primary action.
 - Use product-specific copy, semantic tokens, and the existing visual language.
