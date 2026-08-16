@@ -182,6 +182,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 ### CSS and Styling
 
 - [Landing Page Image Quality](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/landing-page-image-quality-cursorrules-prompt-file.mdc) - Avoiding placeholder or broken image URLs, using stable visual assets, and checking alt text, dimensions, licensing, and responsive behavior.
+- [UIZZE UI Finish Gate](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/uizze-ui-finish-gate.mdc) - Product-specific frontend UI decisions, required interaction states, responsive and accessibility checks, and a hard finish gate to prevent generic AI UI.
 - [Tailwind CSS (Next.js Guide)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/tailwind-css-nextjs-guide-cursorrules-prompt-file.mdc) - Tailwind CSS development with Next.js integration.
 - [Tailwind (React, Firebase)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/tailwind-react-firebase-cursorrules-prompt-file.mdc) - Tailwind development with React and Firebase integration.
 - [Tailwind (shadcn/ui Integration)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/tailwind-shadcn-ui-integration-cursorrules-prompt-.mdc) - Tailwind development with shadcn/ui integration.
