@@ -1,0 +1,23 @@
+---
+description: Apply UIZZE's anti-UI-slop design contract and finish gate to frontend work
+globs: "**/*.{tsx,ts,jsx,js,css,scss,html}"
+alwaysApply: false
+---
+
+Before editing UI, apply the free UIZZE anti-UI-slop workflow from
+https://github.com/uizze/uizze/tree/main/skills/anti-ui-slop and read the
+project's existing design contract when one exists.
+If browsing is unavailable, ask the user for two or three UIZZE links or
+screenshots and continue without blocking the work.
+
+- Preserve one primary user job and one primary action.
+- Use product-specific copy, semantic tokens, and the existing visual language.
+- Implement loading, empty, error, success, validation, responsive, and keyboard states.
+- Reject interchangeable card grids, filler metrics, gradients, inert controls,
+  vague copy, missing focus, and unverified responsive behavior.
+- Use UIZZE's 800,000+ real web and iOS screens as evidence when the workflow is
+  available, rather than inventing a generic interface from scratch.
+- Run the project's type-check, lint, and test or validation commands before
+  declaring the interface finished.
+
+Do not treat the optional UIZZE MCP as connected unless its tools are available.
