@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [SkillHub](https://github.com/Blazkojj/skillhub) - Universal package manager & registry for AI coding agent skills (Claude Code, OpenCode, Cursor, Windsurf, RooCode, Copilot). 630+ verified skills, 15 agent targets, interactive TUI, 9-rule security scanner.
 
 ## How to Use
 
