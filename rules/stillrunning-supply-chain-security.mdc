@@ -1,0 +1,36 @@
+---
+description: Block malicious pip/npm packages before Cursor installs them
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Supply Chain Security
+
+Before installing any Python or npm package, check it against the stillrunning threat database:
+
+```bash
+curl -s "https://stillrunning.io/api/check-package?name={package_name}" | jq .verdict
+```
+
+## Rules
+
+1. If verdict is `DANGEROUS`: **DO NOT install**. Inform the user the package is blocked.
+2. If verdict is `SUSPICIOUS`: Warn the user and ask for confirmation before proceeding.
+3. If verdict is `CLEAN`: Proceed with installation.
+
+## Examples
+
+- `pip install requests` → Check `requests` → CLEAN → proceed
+- `pip install malicious-pkg` → Check `malicious-pkg` → DANGEROUS → block and explain
+- `npm install event-stream` → Check `event-stream` → SUSPICIOUS → warn user
+
+## For guaranteed blocking
+
+Install the import hook (blocks at Python runtime, not just Cursor):
+
+```bash
+pip install stillrunning
+stillrunning --install-hook
+```
+
+More info: https://stillrunning.io/agent-setup

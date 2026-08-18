@@ -311,6 +311,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 ### Security
 
 - [DevSecOps, SSDLC, and AppSec](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/security-devsecops-ssdls-appsec.mdc) - Secure coding, secret handling, dependency hygiene, authentication, authorization, security testing, and compliance documentation.
+- [Supply Chain Security (stillrunning)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/stillrunning-supply-chain-security.mdc) - Block malicious pip/npm packages before Cursor installs them. Checks 225k+ known-bad packages via stillrunning.io API.
 
 ### Documentation
 
