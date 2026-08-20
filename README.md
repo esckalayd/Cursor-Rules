@@ -204,6 +204,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 ### Database and API
 
+- [FoundryNet Industrial Equipment Telemetry](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/foundrynet-industrial-telemetry.mdc) - Canonical field naming for industrial equipment telemetry (CNC, robots, PLCs, vehicles, HVAC) across Modbus, OPC UA, MTConnect, PROFINET, EtherNet/IP, BACnet, and J1939.
 - [GraphQL (Apollo Client)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/react-graphql-apollo-client-cursorrules-prompt-file.mdc) - GraphQL development with Apollo Client integration.
 - [Snowflake Cortex AI](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/snowflake-cortex-ai-cursorrules-prompt-file.mdc) - AI_COMPLETE, AI_CLASSIFY, AI_EXTRACT, Cortex Search, and RAG applications.
 - [Snowflake Data Engineering](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/snowflake-data-engineering-cursorrules-prompt-file.mdc) - Snowflake SQL, data pipelines (Dynamic Tables, Streams, Tasks, Snowpipe), semi-structured data, Snowflake PostgreSQL, and cost optimization.
