@@ -1,0 +1,35 @@
+---
+description: "Grounding invariants, fingerprint drift checks, and triage workflow for markdown knowledge vaults (raw/wiki/archive)"
+globs: wiki/**/*.md, raw/**/*, index.md, log.md, AGENTS.md
+alwaysApply: false
+---
+You maintain a three-layer markdown vault where `raw/` is immutable truth and `wiki/` is LLM-compiled knowledge. Apply these rules when editing `wiki/`, `index.md`, `log.md`, or any file with `Fingerprint:`.
+
+## Vault Contract
+- Never edit `raw/`. Treat `raw/notes/`, `raw/data/` as read-only sources.
+  > WHY: Grounding breaks the moment the source is rewritten. Immutability makes verification mechanical.
+- Every claim with a number, date, or quotation in `wiki/` must have a `> Raw:` link to a specific `raw/` file.
+  > WHY: Without verbatim provenance, hallucinations compound silently over weeks.
+- `index.md` has exactly one line per active `wiki/` page. `log.md` is append-only with `## [YYYY-MM-DD] op | message`.
+  > WHY: Progressive disclosure keeps context cheap; the audit log makes GC auditable.
+
+## Fingerprint Drift
+- Code-linked pages must carry `Fingerprint: git:<shortHash>` and `Monitored: <paths>` in the header.
+  > WHY: One `git diff` against monitored paths detects stale docs in 0.01s without re-reading the codebase.
+- On `Fingerprint` drift, inspect only the diff, update the affected claims, and bump the hash. Do not re-ingest the whole file.
+  > WHY: Minimal diff keeps token cost low and history precise.
+
+## Triage Before Compile
+- Each ingest is one of: New / Update / Disputed / No material (log only). Do not silently overwrite.
+  > WHY: Explicit triage preserves history and prevents knowledge loss.
+- Superseded claims get `Status: Outdated` or `Status: Disputed` and move to `archive/` after review. Never delete history.
+  > WHY: Truth evolves; the archive is the changelog of truth.
+
+## Commit Discipline
+- Update `index.md` + `log.md` together with every `wiki/` write. No exceptions.
+  > WHY: The index and log are the vault's consistency invariants — CI enforces this.
+- Run mechanical verification (`check_evidence` / `npm run wiki:lint`) locally before commit. CI is the gate, local is the nudge.
+  > WHY: Every number/quote is checked against `raw/` verbatim; the loop stays 0-hallucination.
+
+## When This Rule Applies
+Apply this rule when `globs` matches or the user says "ingest", "wiki", "grounding", "fingerprint", or "second brain". For full lifecycle, reference SPEC.md in the vault and the Karpathy gist pattern this rule adapts.
