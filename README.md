@@ -314,6 +314,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 ### Documentation
 
+- [Build Remote Agent pairing (gbr/1)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/gbr-pair.mdc) - Pair a phone running Build Remote Agent to this Cursor session (loopback Bot API `:8788` or `gbr-mcp`; spectator only).
 - [Gherkin Style Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/gherkin-style-testing-cursorrules-prompt-file.mdc) - Behavior-driven scenarios and acceptance criteria.
 - [How-To Documentation](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/how-to-documentation-cursorrules-prompt-file.mdc) - Task-oriented guides and procedural documentation.
 - [README Best Practices](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/readme-best-practices-cursorrules-prompt-file.mdc) - README documentation with best practices integration.

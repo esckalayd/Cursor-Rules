@@ -1,0 +1,62 @@
+---
+description: Pair a phone running Build Remote Agent to this Cursor session via gbr/1. Use when the user wants a mobile spectator on loopback Bot API :8788 or gbr-mcp. Requires gbr-agent v0.6.0+.
+globs: []
+alwaysApply: false
+---
+
+# Build Remote Agent — pairing device
+
+One adapter. Protocol `gbr/1`. No fourth pair protocol.
+
+Independent product by Linespotting AB. Not affiliated with xAI or SpaceX.
+
+Website: https://grokbuildremote.com/
+Agent (MIT): https://github.com/LinespottingOrg/GrokBuildRemote-Agents
+
+## Pair
+
+1. Phone: Build Remote Agent → Connect.
+2. PC: `gbr-agent pair` — browser QR **and** printed 8-char code.
+3. Phone scans QR **or** types the 8-char code.
+4. PC: `gbr-agent run` (keep it running).
+
+```bash
+curl -fsSL https://grokbuildremote.com/install.sh | bash
+gbr-agent version    # need v0.6.0+
+gbr-agent pair && gbr-agent run
+```
+
+Unpair on the phone before a new mailbox. Force-close is not enough.
+
+## Attach (only these)
+
+| How | Where |
+|-----|--------|
+| Bot API | `http://127.0.0.1:8788` after `gbr-agent run` |
+| MCP | stdio `gbr-mcp`, or Cursor `~/.cursor/mcp.json` / `.cursor/mcp.json` |
+
+Phone is spectator + veto, not orchestrator.
+
+```bash
+curl -sS http://127.0.0.1:8788/health
+curl -sS http://127.0.0.1:8788/v1/sessions
+```
+
+Cursor MCP stdio example (`~/.cursor/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "gbr": {
+      "command": "node",
+      "args": ["GrokBuildRemote-Agents/mcp/gbr-mcp/bin/gbr-mcp.js"]
+    }
+  }
+}
+```
+
+Do not commit mailbox keys. Phone **Settings → Bot API** is the only place the relay key is copied.
+
+## Loop
+
+diagnose → open/attach → lock → inject → wait idle → harvest excerpt → iterate or close
