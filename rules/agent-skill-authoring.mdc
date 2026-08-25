@@ -1,0 +1,121 @@
+---
+description: Author and review Agent Skills (SKILL.md) — frontmatter contract, the three-part description, required sections, and the quality bar that separates a reusable skill from a saved prompt
+globs: **/SKILL.md, **/skills/**/*.md, **/.claude/skills/**/*.md, **/.cursor/skills/**/*.md
+alwaysApply: false
+---
+
+# Authoring Agent Skills (`SKILL.md`)
+
+A skill is a markdown file an agent loads on demand to do one recurring job to a
+professional standard. It is not a saved prompt: a prompt is used once by the
+person who wrote it, a skill is used repeatedly by people who did not.
+
+Apply these rules when creating or editing a `SKILL.md`.
+
+## File layout
+
+```
+skills/
+  your-skill-name/
+    SKILL.md            # required — the skill itself
+    references/         # optional — worked examples, deeper method
+    scripts/            # optional — standard-library-only helpers
+```
+
+- One skill per folder. Folder name = skill name = frontmatter `name`.
+- Lowercase and hyphenated (`customer-journey-map`, never `CustomerJourneyMap`).
+- The skill must be useful from `SKILL.md` alone. Scripts are an enhancement,
+  never a prerequisite.
+
+## Frontmatter
+
+```yaml
+---
+name: your-skill-name
+description: "What it does. Use when <trigger phrases>. Produces <the artifact>."
+---
+```
+
+`description` is the single highest-value line in the file — it is usually all
+the model sees when deciding whether to load the skill at all. It must contain
+three things:
+
+1. **What** it does, in one clause.
+2. **Use when…** — trigger phrases in the user's vocabulary, not internal jargon.
+   Write what someone would actually type, including the messy phrasings.
+3. **Produces…** — the concrete artifact, so the payoff is legible.
+
+Keep it under ~700 characters. A description that omits triggers is the most
+common reason a good skill never gets loaded.
+
+## Required sections
+
+| Section | Purpose |
+|---|---|
+| `# Title` + one-line summary | Restate the value in plain language. |
+| **What This Skill Produces** | The deliverables, as bullets. Sets expectations. |
+| **Required Inputs** | What to ask for if not provided. Prevents invention. |
+| Framework / Formula | The method, rubric, or weights the skill applies. |
+| **Output Format** | A concrete template — headings, tables, fields. |
+| **Quality Checks** | A checklist the output must pass before hand-over. |
+| **Anti-Patterns** | Explicit "do not" rules — the mistakes this prevents. |
+
+Quality Checks and Anti-Patterns are what make a skill trustworthy rather than
+merely well-formatted. Write the anti-patterns from real failure, not from
+imagination: they are the part a practitioner recognises.
+
+## The quality bar
+
+- [ ] The description has all three parts (what / use when / produces).
+- [ ] It solves a **recurring** job, not a one-off task.
+- [ ] It asks for missing inputs instead of inventing them.
+- [ ] The output format is concrete enough that two runs look like one product.
+- [ ] It works with no setup beyond reading the file.
+- [ ] Instructions are written **to the model** ("Ask for…", "Flag any…",
+      "Never state…"), not to the reader.
+
+## Helper scripts
+
+If the skill ships `scripts/`:
+
+- **Standard library only.** No `pip install`, no third-party imports — the
+  helper must run on whatever interpreter the user already has.
+- **No network access and no surprise file writes.** Read input, print output.
+- Accept input via flags *and* JSON; offer `--json` output for chaining.
+- Include a module docstring with a runnable example and `--help` via `argparse`.
+- If it uses randomness, expose `--seed`. Unreproducible output cannot be verified.
+
+## Anti-patterns
+
+- **A saved prompt with a frontmatter block.** If it does not generalise past
+  your own last task, it is not a skill.
+- **A description with no triggers.** The skill never loads, and no amount of
+  body quality compensates.
+- **Inventing inputs.** A skill that guesses the user's numbers produces
+  confident, wrong artifacts. Ask.
+- **Output format as prose.** "Write a summary" gives two different documents on
+  two runs; a template gives one product.
+- **Anti-patterns invented rather than observed.** They are the section
+  practitioners judge the skill by.
+- **Scripts that are required.** The moment `SKILL.md` alone stops working, the
+  skill has become software with a README.
+- **Letting placeholder text ship.** Scaffolded `TODO` and `[bracketed]` text in
+  a description means the skill was never actually written.
+
+## Validating
+
+Structure can be machine-checked before review:
+
+```bash
+npx skillspec-check ./skills          # or: npx pm-claude-skills skillcheck
+```
+
+It reports a missing trigger clause, a name that does not match its folder,
+placeholder text left in a description, and absent Quality Checks or
+Anti-Patterns sections.
+
+---
+
+*Derived from the [SKILL.md authoring standard](https://github.com/mohitagw15856/pm-claude-skills/blob/main/SKILL-AUTHORING-STANDARD.md)
+used across an open-source library of 1,000+ skills, where the rules above are
+enforced in CI.*
