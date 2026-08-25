@@ -1,0 +1,32 @@
+---
+description: Instructs Cursor AI to query Annolux MCP for verified documentation and snapshot timestamps, avoiding deprecated APIs and hallucinated syntax.
+globs: ["**/*"]
+alwaysApply: false
+---
+# Annolux Search & Temporal Verification Rule
+
+When writing or refactoring code that relies on recent libraries, evolving frameworks, or external APIs:
+
+## 1. Grounding via Annolux MCP
+- When encountering unfamiliar APIs or library updates, invoke the `search_web` tool from Annolux MCP.
+- Restrict queries to official documentation domains using domain filtering (e.g., `domains: ["docs.rs", "react.dev", "go.dev", "github.com"]`).
+
+## 2. Temporal Validation
+- Check the `fetched_at` snapshot date on search results to confirm API validity.
+- Avoid deprecated configuration options or outdated syntax patterns.
+
+## 3. Cursor MCP Setup
+Add to `.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "annolux": {
+      "command": "npx",
+      "args": ["-y", "annolux-mcp"],
+      "env": {
+        "ANNOLUX_API_KEY": "ann_live_YOUR_KEY"
+      }
+    }
+  }
+}
+```
