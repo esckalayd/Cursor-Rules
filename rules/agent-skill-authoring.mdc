@@ -1,6 +1,6 @@
 ---
-description: Author and review Agent Skills (SKILL.md) — frontmatter contract, the three-part description, required sections, and the quality bar that separates a reusable skill from a saved prompt
-globs: **/SKILL.md, **/skills/**/*.md, **/.claude/skills/**/*.md, **/.cursor/skills/**/*.md
+description: Author and review Agent Skills (SKILL.md) — frontmatter contract, the three-part description, which body sections are required, and the quality bar that separates a reusable skill from a saved prompt
+globs: **/SKILL.md
 alwaysApply: false
 ---
 
@@ -48,17 +48,21 @@ three things:
 Keep it under ~700 characters. A description that omits triggers is the most
 common reason a good skill never gets loaded.
 
-## Required sections
+## Body sections
 
-| Section | Purpose |
-|---|---|
-| `# Title` + one-line summary | Restate the value in plain language. |
-| **What This Skill Produces** | The deliverables, as bullets. Sets expectations. |
-| **Required Inputs** | What to ask for if not provided. Prevents invention. |
-| Framework / Formula | The method, rubric, or weights the skill applies. |
-| **Output Format** | A concrete template — headings, tables, fields. |
-| **Quality Checks** | A checklist the output must pass before hand-over. |
-| **Anti-Patterns** | Explicit "do not" rules — the mistakes this prevents. |
+| Section | Status | Purpose |
+|---|---|---|
+| `# Title` + one-line summary | Required | Restate the value in plain language. |
+| What This Skill Produces | Required | The deliverables, as bullets. Sets expectations. |
+| Required Inputs | Required | What to ask for if not provided. Prevents invention. |
+| Framework / Formula / Scale | Optional | The method, rubric, weights, or formula the skill applies. |
+| Programmatic Helper | Conditional | Required only if the skill ships a script: how to run it and what it returns. |
+| Output Format | Required | A concrete template — headings, tables, fields. |
+| Quality Checks | Required | A checklist the output must pass before hand-over. |
+| Anti-Patterns | Required | Explicit "do not" rules — the mistakes this prevents. |
+
+Keep them in this order. Not every skill needs the optional rows, but strong
+ones usually carry most of them.
 
 Quality Checks and Anti-Patterns are what make a skill trustworthy rather than
 merely well-formatted. Write the anti-patterns from real failure, not from
