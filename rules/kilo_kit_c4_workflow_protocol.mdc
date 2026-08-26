@@ -1,0 +1,25 @@
+---
+description: Guidelines for Kilo-Kit C4 workflow protocol. Enforces systematic brainstorming, planning, and verification before code modification to prevent AI hallucination.
+globs: ["**/*"]
+alwaysApply: true
+---
+# Kilo-Kit C4 Workflow Protocol
+
+## The Hard-Gate Rule (Think Before Code)
+- NEVER modify or write code immediately upon receiving a non-trivial request.
+- First explore intent, requirements, trade-offs, and design before implementation.
+- Every architectural decision must follow: Reproduce -> Minimum Diff -> Hypothesis -> Verify.
+
+## Cognitive Thinking & Reasoning Principles
+- **Inversion Analysis:** Before writing code, analyze where the design will fail first under scale, concurrent requests, or network timeouts.
+- **Simplification Cascade:** Seek the single design insight that eliminates unnecessary complexity or boilerplate.
+- **Blast Radius Isolation:** Analyze which existing modules, exports, or database contracts could break before editing.
+- **5-Whys Root Cause Tracing:** Never apply superficial band-aids to error logs. Trace causal dependencies backward to the root trigger.
+
+## Verification Before Completion
+- Require fresh verification evidence that demonstrates expected behavior before claiming completion, such as passing tests, a successful typecheck, or a regression command confirming that the failure is fixed.
+- Evidence before assertions always. Never assume a fix works without running verification.
+
+## Code Quality & Refactoring
+- Keep diffs minimal and targeted to the problem statement.
+- Maintain existing codebase conventions and architectural boundaries.
