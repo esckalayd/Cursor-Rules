@@ -317,6 +317,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Gherkin Style Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/gherkin-style-testing-cursorrules-prompt-file.mdc) - Behavior-driven scenarios and acceptance criteria.
 - [How-To Documentation](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/how-to-documentation-cursorrules-prompt-file.mdc) - Task-oriented guides and procedural documentation.
 - [README Best Practices](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/readme-best-practices-cursorrules-prompt-file.mdc) - README documentation with best practices integration.
+- [Magzdown (Share output as a rendered document)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/magzdown-share-as-document-cursorrules-prompt-file.mdc) - Encode the agent's markdown output into a magzdown.com link that renders as a typeset document, no upload.
 
 ## Directories
 

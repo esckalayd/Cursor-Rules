@@ -1,0 +1,57 @@
+---
+description: Turn markdown the agent produced into a Magzdown link the user can read as a typeset document. Apply when the user asks to share, present, publish, or make readable a report, summary, PRD, or review, or says "open in magzdown".
+globs: **/*.md, **/*.mdx
+alwaysApply: false
+---
+
+# Open in Magzdown
+
+Magzdown renders markdown as a paginated document at a URL. The document is encoded in the URL, so nothing is uploaded and no account is needed. Use it when a human needs to read what you wrote, instead of pasting raw markdown.
+
+## When
+
+- The user asks to share, present, or make readable a report, summary, PRD, research note, or code review you produced.
+- The user says "open in magzdown".
+- You finished a long markdown document the user will read rather than edit.
+
+Skip it for code, config, and short answers.
+
+## Before you share
+
+The document travels inside the URL, so the link is the document: anyone holding it can read the content, and it lands in browser history and in whatever chat it is pasted into.
+
+- Ask the user before creating a link. Do not share on your own initiative.
+- Refuse if the content carries secrets (keys, tokens, credentials), personal data, or material the user has marked confidential or proprietary. Say what you found and offer to share a redacted version instead.
+- If you are unsure whether the content is shareable, ask rather than encode.
+
+## Encoding
+
+1. UTF-8 bytes of the markdown.
+2. Prepend bytes `0x01 0x00`.
+3. Base64, then `+` to `-`, `/` to `_`, strip `=` padding.
+4. URL: `https://www.magzdown.com/open?md=<encoded>`
+
+Check: `# Hi` encodes to `AQAjIEhp`. Full spec: https://www.magzdown.com/docs
+
+## Produce the link
+
+Write the markdown to a file (for example `report.md`), then run one of these in the terminal.
+
+```bash
+printf 'https://www.magzdown.com/open?md=%s\n' "$(printf '\x01\x00' | cat - report.md | base64 | tr '+/' '-_' | tr -d '=\n')"
+```
+
+```python
+import base64, sys
+md = open(sys.argv[1], encoding="utf-8").read()
+enc = base64.urlsafe_b64encode(b"\x01\x00" + md.encode()).rstrip(b"=").decode()
+print("https://www.magzdown.com/open?md=" + enc)
+```
+
+## Size guard
+
+Run `wc -c < report.md` first. Over about 100 KB the URL may be truncated. Remove embedded images, split the document, or ask the user which section they want.
+
+## Hand it over
+
+Reply with a markdown link whose text is the document title, for example `[Q3 infra review](https://www.magzdown.com/open?md=...)`, plus one line saying what it is. Do not paste the full markdown as well.
