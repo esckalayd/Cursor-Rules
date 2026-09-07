@@ -1,0 +1,29 @@
+---
+description: Stop coding agents from skipping tests, gutting assertions, or rewriting unrelated code under a typo PR title. Use with Driftwatch CI for enforcement.
+globs:
+alwaysApply: true
+---
+
+# Agent PR test integrity
+
+Coding agents often keep CI green by skipping tests, emptying bodies, weakening matchers, or drive-by editing files outside the stated change. Do not do that.
+
+## Never introduce these to go green
+
+- Skip / pending markers: `it.skip`, `describe.skip`, `test.skip`, `it.todo`, `xit`, `xtest`, `@pytest.mark.skip`, `@pytest.mark.xfail`, `pytest.skip`, `self.skipTest`, Mocha `this.skip()`, Rust `#[ignore]`, `@Disabled`
+- Emptied tests: body becomes `pass`, `...`, or assertion-free while the wrapper remains
+- Deleted test files to silence failures
+- Weakened matchers: `toEqual` / `toBe(literal)` → `toBeTruthy`; `assertEqual` → `assertTrue(x)`; pinned values → `expect.anything()` / `expect.any(T)`
+- Gutted or wildcarded snapshots
+
+## Scope is a contract
+
+If the PR title says "fix typo in README", do not edit `src/`, billing, configs, or dependencies. Put an explicit `Scope:` block in the PR body listing allowed paths. Do not edit siblings of a named file without declaring them.
+
+## Unexplained dependencies
+
+Do not add a new package in `package.json`, `requirements.txt`, `pyproject.toml`, `go.mod`, or `Cargo.toml` without naming it in the PR title or body and saying why.
+
+## Enforcement
+
+Rules alone are advisory. Pair them with CI that diffs the PR and fails on these patterns. Driftwatch is one such kit: https://github.com/driftwatch-kit/driftwatch
