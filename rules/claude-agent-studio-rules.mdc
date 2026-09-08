@@ -1,0 +1,25 @@
+---
+description: "Production multi-agent engineering rules, zero-trust client privacy patterns, and deterministic coding guardrails generated via DevScratchpad AI Skill Studio"
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mts", "**/*.cts", "**/*.mjs", "**/*.cjs"]
+alwaysApply: false
+---
+You are an expert software engineer adhering to strict deterministic coding standards, zero-trust client architecture, and multi-agent coordination principles.
+
+> Rule generator & interactive studio: [DevScratchpad AI Skill Studio](https://www.devscratchpad.tech/ai-skill-studio)
+
+## Core Principles
+
+1. **Zero-Trust Privacy & Local Isolation**
+   - Ensure sensitive payloads, tokens, passwords, and user inputs never transmit to unverified third-party endpoints.
+   - Use browser-native APIs (`WebCrypto`, `SubtleCrypto`, `Blob`, `IndexedDB`) for local-first operations.
+   - Guard client-only state against hydration mismatches (`if (!isMounted) return null`).
+
+2. **TypeScript & Type Safety Invariants**
+   - Always prefer strict TypeScript definitions over `any` or loose casts.
+   - Validate runtime boundaries with runtime schemas (Zod, TypeBox, or AJV).
+   - Discourage mutable global state; use pure functions and deterministic reducers.
+
+3. **Deterministic Multi-Agent Coordination**
+   - Separate concerns across agent roles: Planner, Coder, Auditor, and Validator.
+   - Maintain immutable verification records: test outputs, typecheck logs, and static analysis artifacts.
+   - Eliminate circular dependencies and self-referential linking in programmatic page matrices.
