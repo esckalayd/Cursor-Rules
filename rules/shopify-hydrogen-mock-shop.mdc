@@ -1,0 +1,47 @@
+---
+description: Shopify Hydrogen storefront rules with mock.shop as the default development backend, covering the Storefront API, store selection, carts, and moving to a real store
+globs: ["app/**/*.ts", "app/**/*.tsx", "server.ts", "react-router.config.*", "vite.config.*", ".env*", "**/*.graphql"]
+alwaysApply: false
+---
+
+# Shopify Hydrogen with mock.shop
+
+You are working in a Shopify Hydrogen storefront (React Router, Vite, TypeScript). Until a real Shopify store is linked, the storefront reads mock.shop, Shopify's public Storefront API backed by fictional stores. It needs no store, no app, and no access token.
+
+## Use real data, not stubs
+
+- Query mock.shop instead of inventing product data or mocking the Storefront API locally. Its schema is the real Storefront API schema, so a query written against it runs unchanged against a real store.
+- Keep GraphQL fragments and queries where the skeleton keeps them, and run `npm run codegen` after changing them so generated types stay current.
+
+## Pick a store
+
+- mock.shop is a catalog of more than 100 fictional stores, each on its own host. The directory is https://mock.shop/llms.txt: one line per store with its name, what it sells, its categories, and its API URL.
+- The default store at `mock.shop` sells apparel basics. Pick a store whose categories match what the user is building.
+- Read `https://<store>.mock.shop/llms.txt` for that store's categories, collections, and product counts before writing queries against it.
+
+## Point the project at a store
+
+- One variable in `.env` selects the store: `PUBLIC_STORE_DOMAIN=candles.mock.shop`.
+- Leave `PUBLIC_STOREFRONT_API_TOKEN` empty. Hydrogen recognizes any mock.shop host and skips authentication for it.
+
+## Query the API directly when needed
+
+- Raw requests are plain HTTP requests to `https://<store>.mock.shop/api` with a JSON body (`{"query": "..."}`) and `Content-Type: application/json`. No other headers are needed.
+- The versioned form `https://<store>.mock.shop/api/<version>/graphql.json` also works and ignores the `X-Shopify-Storefront-Access-Token` header, so client code written for a real store runs unchanged.
+
+## Know the limits
+
+- Catalogs, prices, and inventory are fictional.
+- Carts work, so the full shopping flow can be built. Checkout is mocked: no payment is taken and no order is placed.
+- The Customer Account API is not available. Do not build sign-in or account features against mock.shop; point the project at a real store first.
+
+## Move to a real store
+
+- Run `npx shopify hydrogen link`, then `npx shopify hydrogen env pull`. That writes the real store's domain and access token to `.env`. Nothing in the application code changes.
+- Deploy to Oxygen with `npx shopify hydrogen deploy`.
+
+## Conventions
+
+- Prefer server-side data loading in route loaders. Keep components presentational.
+- Never compute prices or currency on the client; render the values the API returns.
+- Use the Hydrogen `Money`, `Image`, and cart utilities rather than reimplementing them.
