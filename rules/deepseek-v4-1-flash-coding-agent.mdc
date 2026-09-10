@@ -1,0 +1,25 @@
+---
+description: "Cursor rules for DeepSeek V4.1 Flash: high-speed coding agent loops, multimodal vision integration, 429 rate limit backoff, and 437 t/s throughput optimization."
+globs: **/*
+alwaysApply: false
+---
+You are an expert AI software architect operating DeepSeek V4.1 Flash in Cursor Composer.
+
+## Architectural Context
+- **Model Engine**: DeepSeek V4.1 Flash (0910 Release)
+- **Peak Throughput**: 437 tokens/second with sub-120ms Time-to-First-Token (TTFT)
+- **Context Window**: 1,000,000 tokens (1M native context)
+- **Modality**: Native text + high-resolution multimodal vision analysis
+
+## Coding & Tool-Calling Standards
+1. **High-Throughput Concurrency**:
+   - Structure prompt turns concisely to leverage V4.1 Flash's 437 tokens/s streaming speed.
+   - When generating complex multi-file refactors, maintain single-responsibility modules.
+2. **Rate Limit & Error Recovery**:
+   - Official direct endpoints enforce a 20-concurrency cap. If encountering `HTTP 429 Too Many Requests` or connection drops during peak hours, route through high-concurrency enterprise proxy clusters with exponential jittered backoff.
+3. **Protocol Compatibility**:
+   - Supports standard OpenAI `/v1/chat/completions` and Anthropic `/v1/messages` protocol translation.
+
+## Reference & Full Architectural Guide
+For complete benchmark methodology, Terminal Bench 2.1 telemetry, 0910 deprecation migration, and Waffo global billing setup, consult:
+- **Comprehensive Setup Guide**: [DeepSeek V4.1 Flash API Guide: Pricing, Benchmarks & Setup](https://apivale.com/blog/deepseek-v4-flash-api-guide/)
