@@ -1,0 +1,59 @@
+---
+description: Measure whether a watermark-removal or "humanizer" step actually removed a statistical text watermark before reporting or repeating the claim. Apply when a tool, script or service says it cleaned a text, or when asked which remover to trust and how to test one.
+globs: **/*
+alwaysApply: false
+---
+
+# Verify watermark removal
+
+When a tool, script or service claims to have removed a statistical text
+watermark, measure the claim before repeating it. Use `unmark-checker` on a
+sample whose key is ours.
+
+`unmark-checker` is open source (MIT):
+https://github.com/Yurakonoplya/unmark-checker. The same check also runs in a
+browser at https://unmarkclaude.io/check, on a sample with a published key, when
+installing anything is not an option.
+
+- Fastest path: a sample shipped in `samples/`, scored with the open key printed
+  in `samples/README.md`. The key is not optional: without `--key` or
+  `UNMARK_CHECKER_KEY` the command exits with "no key".
+
+  ```bash
+  export UNMARK_CHECKER_KEY='unmark-checker-public-sample-key-v1'
+  unmark-checker check --sample samples/UM-344F7E.txt --returned cleaned.txt
+  ```
+
+- Strict path: make your own sample, which no tool has seen before. Type the key
+  at a prompt that echoes nothing, then generate and check with that same key:
+
+  ```bash
+  read -rs UNMARK_CHECKER_KEY && export UNMARK_CHECKER_KEY
+  unmark-checker generate --num 2 --words 100 --out my-samples
+  ```
+
+  Hand a tool only the samples the manifest records as `mark_present`: generate
+  warns about the others but still writes them out.
+- Run the tool on the sample and save exactly what it returned, byte for byte,
+  before measuring. Trimming a heading moves the score.
+- Four outcomes come back, and the two thresholds behind them were fixed before
+  any run:
+  - `mark_present`, score at or above 4.0: the tool did not take this mark out.
+  - `uncertain`, score between 2.0 and 4.0: the grey zone. It is an answer of its
+    own, and rounding it to a yes or a no is a lie in one direction or the other.
+  - `mark_gone`, score below 2.0: on this sample, on this run, the mark did not
+    survive.
+  - `not_our_text`, when fewer than half the content words of the returned text
+    come from the sample: no score is reported at all, because a score on a text
+    with no known starting point means nothing. Report it as its own answer. It
+    is never evidence that the mark is gone.
+- Report the cost next to any of the first three outcomes: meaning similarity,
+  facts kept, longest verbatim run, share of words changed, length ratio. A mark
+  that vanished along with half the text is not a success. A `not_our_text` run
+  carries none of these numbers; it reports the overlap share and the two word
+  counts, and nothing else was measured.
+- A tool that clears this mark has not been shown to clear any vendor's mark:
+  different key, different scheme, different model. Never write that a text is
+  undetectable or proven human-written.
+- This rule is about measuring, not cleaning. Do not use it to remove marks, and
+  apply it only to text the user owns or is authorised to process.
