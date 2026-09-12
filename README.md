@@ -46,6 +46,7 @@ Cursor Project Rules enhance Cursor AI editor behavior with project-specific gui
   - [Language-Specific](#language-specific)
   - [Security](#security)
   - [Documentation](#documentation)
+  - [Developer Productivity](#developer-productivity)
 - [Directories](#directories)
 - [How to Use](#how-to-use)
 
@@ -317,6 +318,10 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Gherkin Style Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/gherkin-style-testing-cursorrules-prompt-file.mdc) - Behavior-driven scenarios and acceptance criteria.
 - [How-To Documentation](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/how-to-documentation-cursorrules-prompt-file.mdc) - Task-oriented guides and procedural documentation.
 - [README Best Practices](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/readme-best-practices-cursorrules-prompt-file.mdc) - README documentation with best practices integration.
+
+### Developer Productivity
+
+- [Cheapskate](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/cheapskate-cursorrules-prompt-file.mdc) - Token, tool-call, and context economy discipline: a pre-action checklist and cost escalation ladder that make the agent stingy with resources without ever cutting output quality.
 
 ## Directories
 
