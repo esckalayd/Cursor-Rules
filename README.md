@@ -268,6 +268,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 ### Language-Specific
 
 - [AutoML and Hyperparameter Optimization](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/automl-hyperparameter-optimization.mdc) - Python ML model search, validation design, search spaces, experiment tracking, and time-series AutoML.
+- [C# / .NET (ASP.NET Core, EF Core)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/csharp-dotnet-aspnetcore-efcore.mdc) - Senior-grade async correctness, EF Core query safety, Clean Architecture boundaries, and API best practices for C# and .NET 8+.
 - [Fortran](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/fortran.mdc) - Modern Fortran scientific computing, modules, explicit interfaces, kind parameters, memory safety, and testing.
 - [JavaScript/TypeScript Code Quality](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/javascript-typescript-code-quality-cursorrules-pro.mdc) - JavaScript and TypeScript development with code quality integration.
 - [JavaScript (Chrome APIs)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/javascript-chrome-apis-cursorrules-prompt-file.mdc) - JavaScript development with Chrome APIs integration.

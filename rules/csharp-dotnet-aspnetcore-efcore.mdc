@@ -1,0 +1,57 @@
+---
+description: Senior-grade async, EF Core query safety, and Clean Architecture boundaries for C#/.NET 8+ with Cursor
+globs: ["**/*.cs"]
+alwaysApply: false
+---
+
+# C# / .NET 8+ (ASP.NET Core, EF Core)
+
+Target .NET 8+ / C# 12+. Assume nullable enabled, implicit usings, warnings-as-errors.
+
+## Async/await
+
+- Async I/O methods return `Task` / `Task<T>` and are suffixed `Async`. Use `ValueTask<T>` only on hot paths that frequently complete synchronously.
+- Never `.Result` / `.Wait()` / `.GetAwaiter().GetResult()` in application code — these block a thread and can deadlock.
+- Make the method `async`, `await` the call, and propagate `Task` up the chain. No `async void` except event handlers.
+- Flow `CancellationToken cancellationToken = default` (last parameter) through the whole chain. Pass it to EF Core, `HttpClient`, streams, and delays.
+- Do not use `Task.Run` to disguise synchronous I/O as async.
+
+## EF Core read queries
+
+- Use `AsNoTracking()` for read-only queries — change tracking is only needed before `SaveChangesAsync`.
+- Prevent N+1: either eager-load with `Include` / `ThenInclude`, or project to a DTO with `Select`. Prefer projection for read models.
+- Do not enable lazy-loading proxies in web apps — they hide N+1 and fire queries during serialization.
+- Always paginate unbounded queries (`.Skip().Take()` or keyset). Never materialize an entire table.
+- Use `AnyAsync(...)` for existence checks, not `CountAsync() > 0`.
+- Do not combine `Include` with a `Select` projection — pick one.
+- Consider `AsSplitQuery()` for multiple collection `Include`s to avoid cartesian explosion.
+- Use async EF APIs: `ToListAsync`, `FirstOrDefaultAsync`, `SingleOrDefaultAsync` — pass `CancellationToken`.
+
+## Controllers and API boundaries
+
+- Controllers are thin: bind → dispatch → map. No business logic, no direct EF calls.
+- Bind from purpose-built request DTOs. Never bind directly to a domain entity (overposting risk).
+- Return response DTOs, not entities. Keep the persistence model and the HTTP contract separate.
+- Return correct status codes: `201 Created` with `Location` for creates, `404 NotFound` for missing resources, `400` / `422` for validation failures via `ProblemDetails`.
+
+## Clean Architecture
+
+- Dependencies point inward: Web / Infrastructure → Application → Domain.
+- Domain has no dependency on EF Core, ASP.NET Core, or external libraries.
+- Application defines interfaces (repositories, services); Infrastructure implements them.
+
+## Security
+
+- Authorization confirms identity. Add resource-level checks (ownership) separately — `[Authorize]` alone does not prevent IDOR.
+- Secret handling: use `IConfiguration` with Key Vault or user-secrets. No connection strings or API keys in `appsettings.json`.
+- Validate and sanitize inputs; use parameterized queries via EF Core.
+
+## Nullable and guards
+
+- `T?` marks nullable intent; `T` means the value must be present.
+- Guard public entry points: `ArgumentNullException.ThrowIfNull(x)`, `ArgumentException.ThrowIfNullOrWhiteSpace(s)`.
+
+## Logging
+
+- Use `ILogger<T>` with structured message templates — never string interpolation.
+- Never log secrets, PII, or full exception messages to end users.
