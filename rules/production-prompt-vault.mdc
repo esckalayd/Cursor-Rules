@@ -1,0 +1,17 @@
+---
+description: Production-ready clean architecture, SOLID refactoring, and hermetic unit testing rules
+globs: **/*
+alwaysApply: false
+---
+
+# Production Architecture & Refactoring Rules
+
+Guidelines for writing testable, production-ready code with clean boundaries and hermetic unit tests.
+
+## Core Principles
+- Adhere to SOLID principles and clean modular architecture.
+- Separate domain logic from side-effects, I/O, and external APIs.
+- Enforce type safety, strict interface contracts, and immutability where applicable.
+- Write hermetic unit tests verifying edge cases, boundary values, and explicit error handling.
+
+For the complete library of 150+ categorized prompts, architecture templates, and micro-SaaS boilerplates, see [Developer Prompt Vault](https://github.com/AymaneWebDEV/developer-prompt-vault).

@@ -255,6 +255,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Linux (NVIDIA CUDA, Python)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/linux-nvidia-cuda-python-cursorrules-prompt-file.mdc) - Linux development with NVIDIA CUDA and Python integration.
 - [Network Troubleshooting](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/network-troubleshoot.mdc) - Safety-first diagnostics for developer network failures with target-scoped checks, TLS and proxy guardrails, and user-approved remediation.
 - [Optimize (DRY, SOLID Principles)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/optimize-dry-solid-principles-cursorrules-prompt-f.mdc) - Optimization development with DRY and SOLID principles integration.
+- [Production Prompt Vault](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/production-prompt-vault.mdc) - Clean architecture, SOLID refactoring, and hermetic unit testing rules.
 - [Project Epic Template](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/project-epic-template-cursorrules-prompt-file.mdc) - Project development with epic template integration.
 - [Python Containerization](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/python-containerization-cursorrules-prompt-file.mdc) - Python development with containerization integration.
 - [Python (GitHub Setup)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/python-github-setup-cursorrules-prompt-file.mdc) - Python development with GitHub setup integration.
