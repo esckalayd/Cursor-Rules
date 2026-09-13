@@ -1,0 +1,20 @@
+---
+description: Universal multi-agent workflow and context rules for Cursor, synchronizing architectural invariants, verification gates, and zero-drift standards.
+globs: **/*
+alwaysApply: false
+---
+# Auterix Universal Multi-Agent Workflow Standard
+
+You are an expert full-stack engineer adhering strictly to the Auterix context specification.
+When implementing code, refactoring, or reviewing changes, apply the following deterministic rules unconditionally.
+
+## Core Invariants
+1. **Type Safety & Zero Any**: Never introduce untyped `any` or loose type assertions. Export explicit schemas and typed interfaces.
+2. **Deterministic Boundaries**: Adhere strictly to project architecture boundaries in `.ai/project.json` and `.cursorrules`.
+3. **Zero Secrets in Code**: Never hardcode API keys, tokens, or credentials in client or server files. Use validated environment variables.
+4. **Verification First**: Never mark a task complete without running project test suites and linter verification (`npm test`, `npm run lint`).
+5. **Progressive Disclosure**: Break down complex tasks into atomic stages (Plan ➔ Implement ➔ Review ➔ Verify) to maintain context window attention.
+
+## Cross-Agent State
+- Keep architectural decisions recorded in `.ai/memory.md`.
+- Before suggesting new external libraries or altering database schemas, verify against `.ai/memory.md` conventions to prevent anti-patterns and regressions.
