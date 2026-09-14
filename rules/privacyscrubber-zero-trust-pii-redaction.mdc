@@ -1,0 +1,22 @@
+---
+description: Zero-Trust Data Sanitization (ZTDS) and local PII redaction for Cursor AI. Intercepts credentials, API keys, and personal identifiers locally in RAM before LLM dispatch.
+globs: **/*
+alwaysApply: true
+---
+# Zero-Trust Data Sanitization & PII Redaction (PrivacyScrubber)
+
+When operating in repositories handling customer data, production logs, API secrets, database credentials, or regulatory data (GDPR, HIPAA, SOC 2, PCI DSS):
+
+## 1. Secrets & Credentials Protection
+- Never send raw `.env`, API keys, private keys, or credentials to remote LLMs.
+- When reading configuration or credential files, use the `guard_read_file` tool (or run `npx ps-guard`) so secrets are replaced with in-memory deterministic tokens (e.g. `[API_KEY_1]`, `[SECRET_1]`) before entering the context window.
+- When inspecting terminal outputs or database logs, pipe commands through `ps-guard` (`cat <log> | npx ps-guard --`) or use `guard_exec`.
+
+## 2. PII & Regulatory Compliance
+- Mask direct identifiers (customer names, emails, phone numbers, national IDs) prior to prompting cloud AI models.
+- Apply domain-specific profiles where appropriate (`Dev`, `Medical`, `Finance`, `Legal`, `HR`) to preserve syntactic context without leaking compliance-scoped entities.
+- Zero network egress: Ensure all sanitization operates 100% in local memory (RAM) with no intermediary third-party proxies.
+
+## 3. Patching & Restoration
+- When writing code or configuration containing masked tokens back to disk, use `guard_apply_patch` (or `reveal_text`) so genuine values are restored locally on the filesystem without sending plain secrets across the network.
+- Verify that no synthetic token placeholders (e.g. `[NAME_1]`, `[EMAIL_1]`) remain committed in production source files.
