@@ -311,6 +311,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 ### Security
 
 - [DevSecOps, SSDLC, and AppSec](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/security-devsecops-ssdls-appsec.mdc) - Secure coding, secret handling, dependency hygiene, authentication, authorization, security testing, and compliance documentation.
+- [Zero-Trust Data Sanitization & PII Redaction](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/privacyscrubber-zero-trust-pii-redaction.mdc) - Local-only in-memory PII, credentials, and API secrets masking for Cursor Agent and autonomous workflows using PrivacyScrubber.
 
 ### Documentation
 
