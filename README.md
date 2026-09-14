@@ -321,7 +321,6 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 ## Directories
 
-- [Auterix Studio](https://auterix.vercel.app) - Visual multi-agent context compiler, stack detector, and AI readiness scorecard.
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
 
