@@ -316,6 +316,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [Gherkin Style Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/gherkin-style-testing-cursorrules-prompt-file.mdc) - Behavior-driven scenarios and acceptance criteria.
 - [How-To Documentation](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/how-to-documentation-cursorrules-prompt-file.mdc) - Task-oriented guides and procedural documentation.
+- [PDF & Document Translation (Layout-Preserving)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/pdf-translate-layout-preserving-cursorrules-prompt-file.mdc) - Layout-preserving vector PDF translation, anti-overflow typography checks, and automated 1:1 page visual audits.
 - [README Best Practices](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/readme-best-practices-cursorrules-prompt-file.mdc) - README documentation with best practices integration.
 
 ## Directories
