@@ -1,4 +1,4 @@
-﻿---
+---
 description: "Cursor rules for 1:1 layout-preserving vector PDF translation, anti-overflow CSS typography checks, and automated page difference audits."
 globs: **/*.py,**/*.html,**/*.pdf,**/.cursorrules,**/SKILL.md
 alwaysApply: false
