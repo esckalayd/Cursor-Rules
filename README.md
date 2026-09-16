@@ -164,6 +164,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Cursor Rules Pack v2](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/cursor-rules-pack-v2-cursorrules-prompt-file.mdc) - 7 sample production-tested rules (dependency discipline, error handling, state management, webhook security, and more). See the pack README for full-pack details.
 - [Flutter Expert](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/flutter-app-expert-cursorrules-prompt-file.mdc) - Flutter development with expert integration.
 - [HarmonyOS ArkTS](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/harmony-arkts.mdc) - Components, state, resources, lifecycle, layout, and accessibility.
+- [iOS SwiftUI Verification](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/ios-swiftui-verification.mdc) - SwiftUI persistence, failure handling, and simulator acceptance checks.
 - [NativeScript](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/nativescript-cursorrules-prompt-file.mdc) - Cross-platform mobile app development.
 - [React Native Expo](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/react-native-expo-cursorrules-prompt-file.mdc) - Expo-based mobile app development.
 - [SwiftUI Guidelines](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/swiftui-guidelines-cursorrules-prompt-file.mdc) - SwiftUI development guidelines.
