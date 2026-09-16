@@ -24,11 +24,11 @@ Ensure the MemorySync MCP server is configured in `.cursor/mcp.json` or Cursor S
 ```
 
 ## When to Save Memories
-Automatically invoke memory storage when the user or project establishes durable decisions:
+Prompt the user for explicit approval before saving durable decisions to hosted memory. Redact all proprietary secrets, credentials, and confidential project data prior to transmission:
 - **Architecture Decisions:** Choice of libraries, state management patterns, routing conventions.
 - **Project Conventions:** Date formatting (e.g., strict UTC ISO-8601), naming styles, error handling structures.
 - **Bug Fixes & Gotchas:** Non-obvious edge cases resolved, pinned package workarounds, deprecated API replacements.
-- **Environment & Secrets:** Key configuration variables needed (never store plaintext secrets or private tokens).
+- **Environment & Configuration:** Key non-sensitive configuration parameters (never store plaintext secrets, tokens, or private keys).
 
 ## When to Recall Memories
 At the start of new tasks, feature implementations, or refactoring:
