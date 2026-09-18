@@ -181,6 +181,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 ### CSS and Styling
 
+- [Anti-Slop Design (Human-Grade UI)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/anti-slop-design-cursorrules-prompt-file.mdc) - Cures AI frontend slop, enforces 1-to-3 UX hierarchy, tactile 8-state feedback, and pre-emit quality gating.
 - [Landing Page Image Quality](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/landing-page-image-quality-cursorrules-prompt-file.mdc) - Avoiding placeholder or broken image URLs, using stable visual assets, and checking alt text, dimensions, licensing, and responsive behavior.
 - [Tailwind CSS (Next.js Guide)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/tailwind-css-nextjs-guide-cursorrules-prompt-file.mdc) - Tailwind CSS development with Next.js integration.
 - [Tailwind (React, Firebase)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/tailwind-react-firebase-cursorrules-prompt-file.mdc) - Tailwind development with React and Firebase integration.
