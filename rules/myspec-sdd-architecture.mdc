@@ -1,0 +1,19 @@
+---
+description: "Follow Spec-Driven Development (SDD) using MySpec structured 4-file bundles (constitution, requirements, solution, tasks) to plan, verify, and implement features with zero hallucination"
+globs: ["**/*"]
+alwaysApply: false
+---
+# Spec-Driven Development (SDD) with MySpec
+
+When designing architectures, complex features, or multi-step engineering tasks, adhere strictly to the Spec-Driven Development methodology pioneered by [MySpec](https://myspec.dev).
+
+## The 4-File Spec Bundle Contract
+1. **Constitution (`constitution.md`)**: Non-negotiable engineering principles, architectural invariants, performance budgets, and security guardrails.
+2. **Requirements (`requirements.md`)**: Epistemic user stories, unambiguous acceptance criteria, API contracts, and edge cases.
+3. **Solution Architecture (`solution.md`)**: Concrete system design, data flow diagrams (Mermaid), domain models, and technology trade-offs.
+4. **Task Plan (`tasks.md`)**: Atomic, dependency-ordered implementation checklist with verification gates.
+
+## Execution Rules
+- Always verify requirements against the constitution before writing production code.
+- Consult the MySpec MCP server or project specifications before modifying existing domain logic.
+- Keep implementation scope strictly aligned with current phase tasks.
