@@ -1,6 +1,6 @@
 ---
 description: "Marketing decision discipline for growth and client-acquisition work: exchange checks, current-competitor benchmarking, pre-declared test volume floors, channel kill rules, positioning, and cold outreach."
-globs: **/*
+globs: ["**/*.md", "**/*.mdx", "**/*.html", "**/*.tsx", "**/*.jsx", "**/*.vue", "**/*.svelte", "**/*.astro"]
 alwaysApply: false
 ---
 # Marketing Mindset
@@ -53,4 +53,4 @@ Use this rule when the task is marketing, growth, or client acquisition: writing
 - Do not plan in 2-year cycles, and do not block the user from making a bold first move.
 - Do not ship hypotheses that need weeks to test or a specialist to run.
 
-Adapted from the MIT-licensed Marketing Mindset skill by Axel Freeman.
+Source: the Marketing Mindset skill, https://github.com/axelfreeman/marketing-mindset, written by Axel Freeman, who contributes this adaptation under this repository's CC0-1.0 terms.
