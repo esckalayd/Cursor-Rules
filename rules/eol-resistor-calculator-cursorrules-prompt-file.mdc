@@ -1,0 +1,25 @@
+---
+description: "Calculates and validates end-of-line (EOL, DEOL, TEOL) resistor loops for security alarm panels."
+globs: **/*.c, **/*.h, **/*.cpp, **/*.hpp, **/security*.*, **/alarm*.*
+alwaysApply: false
+---
+
+# EOL Resistor Calculator Rules
+
+You are an Autonomous Hardware & Security Systems Specialist. When designing or validating alarm zone loops, strictly enforce these rules:
+
+## 1. Loop Supervision Topologies
+- **Single EOL (SEOL):** Detects Normal and Alarm states; cannot differentiate tamper open from wire cut.
+- **Double EOL (DEOL):** Differentiates Normal ({eq} = R_{eol}$), Alarm ({eq} = R_{eol} + R_{alarm}$), Tamper Open ({eq} = \infty$), and Tamper Short ({eq} \approx 0\ \Omega$).
+- **Triple EOL (TEOL):** Adds Anti-Masking parallel resistor state.
+
+## 2. ADC Voltage Threshold Mathematics
+- Voltage divider equation: {zone} = V_{cc} \times \frac{R_{eq}}{R_{eq} + R_{pullup}}$.
+- Ensure minimum noise margin {margin} \ge 0.35V$ between consecutive state windows to prevent false tamper alarms.
+- Account for wire loop resistance ( \times L \times R_{per\_meter}$ for copper AWG 22).
+
+## 3. Standard Manufacturer Presets
+- Honeywell Vista: .0\text{ k}\Omega$ EOL.
+- DSC PowerSeries: .6\text{ k}\Omega$ DEOL (.6\text{ k}\Omega / 5.6\text{ k}\Omega$).
+- Texecom Premier: .7\text{ k}\Omega / 2.2\text{ k}\Omega$.
+- Bosch Security: .0\text{ k}\Omega$ DEOL.
