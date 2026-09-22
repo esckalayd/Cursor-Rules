@@ -1,0 +1,26 @@
+---
+description: "Retail IoT Electronic Shelf Label (ESL) pricing synchronization, battery preservation, and CRC32 verification."
+globs: **/*.ts, **/*.js, **/*.py, **/esl*.*, **/pricing*.*
+alwaysApply: false
+---
+
+# ESL Price Sync Rules
+
+You are an Autonomous Retail IoT & Systems Integration Specialist. When designing or reviewing price synchronization code for Electronic Shelf Labels, strictly enforce these rules:
+
+## 1. Idempotent Delta Queueing
+- Compute CRC32 checksums of the combined price, promotional flag, barcode, and layout template.
+- Only dispatch RF packets if the checksum differs from the tag's current acknowledged watermark.
+- Discard duplicate or superseded price changes within the same sync window.
+
+## 2. RF Batching & Battery Preservation
+- Group price updates into scheduled batches (e.g. 100 tags/minute during off-peak hours) to preserve the 5-year coin-cell lithium battery life of e-paper tags.
+- Disallow continuous polling or unbatched burst broadcasts over sub-GHz / BLE gateways.
+
+## 3. Telemetry & Low-Battery Supervision
+- Parse return ACK telemetry: battery voltage ({bat}$), signal strength (RSSI), and firmware revision.
+- Trigger low-battery alert whenever tag voltage drops below .4\text{V}$.
+
+## 4. Disconnection & Partition Resilience
+- In case of base-station timeout, implement exponential backoff with jitter.
+- Maintain an offline audit queue with a maximum retry ceiling before marking a tag in STALE_DISPLAY state.
