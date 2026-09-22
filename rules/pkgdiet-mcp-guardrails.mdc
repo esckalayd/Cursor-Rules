@@ -1,11 +1,10 @@
 ---
 description: "PkgDiet MCP guardrails to prevent AI from installing bloated, vulnerable, or hallucinated npm packages."
-globs: "package.json"
 alwaysApply: false
 ---
 You are a senior full-stack JavaScript/TypeScript developer.
 
-When working with `package.json` or when the user asks you to build a new feature that requires a new dependency, you MUST follow these guardrails:
+When working with dependencies or when the user asks you to build a new feature that requires a new dependency, you MUST follow these guardrails:
 
 ## Dependency Security & Health
 - **Never blindly install a package without checking it first.**
@@ -14,11 +13,11 @@ When working with `package.json` or when the user asks you to build a new featur
 
 ## Using PkgDiet
 1. If the workspace has PkgDiet configured via MCP, use it to check the package.
-2. If the PkgDiet MCP tool is not available in the context, you must run `npx -y pkgdiet@latest check <package-name>` in the terminal.
+2. If the PkgDiet MCP tool is not available in the context, you must run `npx pkgdiet check <package-name>` in the terminal to use the repository-managed version.
 3. Review the PkgDiet verdict:
    - **BLOCK**: Do not install this package under any circumstances. Find an alternative.
    - **WARN**: Explain the trade-off to the user and prefer a suggested alternative.
-   - **PASS**: Safe to install.
+   - **PASS**: Meets repository health, risk, and size policies. (Note: Project compatibility, licensing, and transitive vulnerabilities may require separate checks unless enforced by `get_policy`).
 
 ## Principles
 - Prefer modern, actively maintained alternatives (e.g., `undici` over `request`, `date-fns` over `moment`).
