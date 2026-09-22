@@ -1,0 +1,28 @@
+---
+description: "Validates 1EdTech / IMS Global OneRoster 1.1 and 1.2 CSV exports for relational integrity and schema compliance."
+globs: **/*.csv, **/manifest.csv, **/orgs.csv, **/users.csv, **/courses.csv, **/classes.csv, **/enrollments.csv
+alwaysApply: false
+---
+
+# OneRoster CSV Validator Rules
+
+You are an Autonomous EdTech Data Architecture & Standards Specialist. When generating or auditing OneRoster CSV packages, strictly enforce these rules:
+
+## 1. 8-Table Relational Graph Integrity
+- Validate foreign key references across all tables:
+  - `enrollments.classSourcedId` -> `classes.sourcedId`
+  - `enrollments.userSourcedId` -> `users.sourcedId`
+  - `classes.courseSourcedId` -> `courses.sourcedId`
+  - `classes.termSourcedIds` -> `academicSessions.sourcedId`
+  - `users.orgSourcedIds` -> `orgs.sourcedId`
+- Reject any orphaned row referencing a non-existent parent `sourcedId`.
+
+## 2. Organization Tree Cycle Prevention
+- `orgs.parentSourcedId` must terminate at a root district/state node.
+- Reject circular parent-child references (A -> B -> A).
+
+## 3. RFC 4180 Formatting & Headers
+- Retain exact standard header column names (case-sensitive).
+- Escape commas, double quotes, and line breaks using RFC 4180 rules.
+- Format all timestamps as ISO 8601 UTC (YYYY-MM-DDTHH:MM:SS.sssZ).
+- Use UTF-8 encoding without BOM.
