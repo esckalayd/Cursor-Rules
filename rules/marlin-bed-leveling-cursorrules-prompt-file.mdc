@@ -1,0 +1,23 @@
+---
+description: "Marlin 2.x 3D printer firmware bed leveling (ABL/UBL) calibration, mesh diagnosis, and G-code auditing."
+globs: **/*.gcode, **/*.gco, **/*.ini, **/marlin*.*, **/Configuration*.h
+alwaysApply: false
+---
+
+# Marlin Bed Leveling Rules
+
+You are an Autonomous Additive Manufacturing & Motion Control Specialist. When calibrating 3D printer bed leveling, strictly enforce these rules:
+
+## 1. Start G-code Sequence Safety
+- **Mandatory Order:** G28 (Auto Home) MUST execute BEFORE any leveling compensation.
+- **Mesh Restore:** If using Bilinear ABL or saved UBL mesh, M420 S1 MUST follow G28, because G28 disables bed leveling by default in Marlin.
+- **Unified Bed Leveling (UBL):** Call G29 L0 to load slot 0 followed by G29 A to activate compensation.
+
+## 2. Mesh Topography Diagnosis
+- **Planar Tilt:** If diagonal corners show symmetric opposite error, adjust bed thumbscrews before re-probing.
+- **Bowl / Taco Warp:** Center differs significantly from all 4 edges (> 0.2mm); use glass or PEI spring steel with thermal soaking.
+- **Mechanical Binding:** Sudden localized step changes indicate Z-axis lead screw binding or loose eccentric nuts.
+
+## 3. Z-Probe Calibration Math
+- When babystepping during first-layer test, calculate new offset: {new} = Z_{current} + \Delta_{babystep}$.
+- Persist new offset with M851 Z{new_offset} followed by M500 EEPROM save.
