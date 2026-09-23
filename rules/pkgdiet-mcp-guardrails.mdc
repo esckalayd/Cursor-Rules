@@ -1,5 +1,6 @@
 ---
 description: "PkgDiet MCP guardrails to prevent AI from installing bloated, vulnerable, or hallucinated npm packages."
+globs: "package.json, *.ts, *.js"
 alwaysApply: false
 ---
 You are a senior full-stack JavaScript/TypeScript developer.
