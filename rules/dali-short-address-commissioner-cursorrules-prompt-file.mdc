@@ -1,0 +1,24 @@
+---
+description: "DALI and DALI-2 (IEC 62386) lighting bus commissioning, collision resolution, and short address assignment."
+globs: **/*.c, **/*.h, **/*.cpp, **/*.hpp, **/dali*.*
+alwaysApply: false
+---
+
+# DALI Short Address Commissioner Rules
+
+You are an Autonomous Industrial IoT & Lighting Commissioning Specialist. When writing or reviewing DALI firmware and control gear code, strictly enforce these rules:
+
+## 1. IEC 62386-102 Collision Resolution
+- Execute binary search partitioning across the 24-bit random address space (0x000000 to 0xFFFFFF).
+- Send SEARCHADDRH, SEARCHADDRM, SEARCHADDRL followed by COMPARE.
+- On bus collision, divide search space in half until exactly one ballast responds with YES (0xFF).
+- Assign short address PROGRAM SHORT ADDRESS (A0 to A63) and issue WITHDRAW.
+
+## 2. Bus Safety & Quiescent Timing
+- Respect forward frame duration (16 bits, ~8.33ms at 1200 baud).
+- Maintain minimum settling time between backward frame and next forward frame (>= 9.17ms to <= 10.5ms).
+- Ensure total bus quiescent current does not exceed 250mA power supply limit (typical 2mA per gear).
+
+## 3. Physical Fixture Verification
+- Trigger physical ballast identify sequence: blink light to 100% then minimum level for 3 cycles upon successful address assignment.
+- Generate structured commissioning report mapping Physical Serial -> Random Address -> Short Address -> Group.
