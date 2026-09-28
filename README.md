@@ -311,6 +311,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 ### Security
 
 - [DevSecOps, SSDLC, and AppSec](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/security-devsecops-ssdls-appsec.mdc) - Secure coding, secret handling, dependency hygiene, authentication, authorization, security testing, and compliance documentation.
+- [ThumbGate pre-tool gate](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/thumbgate-pretool-gate.mdc) - Deny a shell command that would print a secret or repeat a recorded lesson failure.
 
 ### Documentation
 
