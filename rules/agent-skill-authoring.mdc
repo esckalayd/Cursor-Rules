@@ -106,6 +106,16 @@ If the skill ships `scripts/`:
 - **Letting placeholder text ship.** Scaffolded `TODO` and `[bracketed]` text in
   a description means the skill was never actually written.
 
+These three are not quality problems. They are reasons to reject a skill
+outright, however well the rest of it is written:
+
+- **Policy overrides.** A skill must never tell the model to ignore or override
+  runtime or system instructions.
+- **Data collection or exfiltration.** A skill must not ask for, store or send
+  user data beyond what the task needs and the user can see happening.
+- **Undisclosed network access.** Helper scripts must not contact endpoints the
+  skill does not name. The default is no network access at all.
+
 ## Validating
 
 Structure can be machine-checked before review:
