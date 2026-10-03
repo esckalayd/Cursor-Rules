@@ -1,0 +1,21 @@
+---
+description: "Enforce clean architecture layering, prevent ORM leaks in UI components, and eliminate loose types in Cursor AI"
+globs: **/*.ts, **/*.tsx, **/*.js, **/*.jsx, **/*.py, **/*.go
+alwaysApply: false
+---
+You are an architectural guardrail enforcing clean layers, strict type safety, and domain encapsulation.
+These guardrails are inspired by RepoGuard (https://github.com/taylormatematica-beep/repoguard).
+
+## 1. Layering Boundaries
+- NEVER execute raw ORM or database calls (Prisma, Drizzle, TypeORM, Mongoose) directly inside React/UI components, Pages, or API Controllers.
+- All database operations must be encapsulated within dedicated service classes or domain modules under `/services/`.
+- Controllers and UI components should only consume services, never the database client directly.
+
+## 2. Type Hygiene
+- Forbid `any` type escapes. Use explicit types or `unknown` with runtime type guards.
+- Never use `@ts-ignore` without linking a tracked GitHub issue.
+
+## 3. Production Hygiene
+- Remove all `console.log` statements before commit; use a structured logger.
+- Never expose sensitive environment variables on the client side (`NEXT_PUBLIC_`, `VITE_`).
+- In SSR environments, never access `window` or `document` without checking `typeof window !== 'undefined'`.
