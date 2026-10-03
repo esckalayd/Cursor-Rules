@@ -1,0 +1,22 @@
+---
+description: "Audit and optimize web performance, Core Web Vitals (LCP, INP, CLS), and DOM bloat using WebAudits diagnostics"
+globs: ["**/*.{html,jsx,tsx,vue,svelte,php}"]
+alwaysApply: false
+---
+# WebAudits Performance & Core Web Vitals Optimization
+
+When auditing or optimizing frontend performance, Largest Contentful Paint (LCP), or DOM tree depth, follow these rules:
+
+## 1. Largest Contentful Paint (LCP) Subparts
+- Break LCP into: TTFB, Resource Load Delay, Resource Load Duration, and Element Render Delay.
+- Never add `loading="lazy"` to above-the-fold or hero images (can delay the LCP image request).
+- Preload an LCP image only when it is not discoverable in the initial markup. For an image in the initial markup, set `fetchpriority="high"` on the `<img>`. If a late-discovered responsive image needs preloading, set `imagesrcset` and `imagesizes` on the `<link>` to match the `<img>`.
+- Add `decoding="async"` to non-blocking images.
+
+## 2. DOM Bloat & INP Prevention
+- Maintain total DOM elements under 1,500 nodes and maximum tree depth under 32 levels.
+- Eliminate redundant wrapper `<div>` elements ("div soup").
+- Virtualize long lists exceeding 50 items.
+
+## 3. Remote Audit Integration
+- Audit only public URLs that contain no credentials, signed tokens, or private identifiers using the WebAudits MCP server (`https://webaudits.pro/api/mcp`) or web inspector at https://webaudits.pro.
