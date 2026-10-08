@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [CommandVault](https://commandvault.ai/collections/cursor-rules-by-framework) - Community-voted `.mdc` project rules (Next.js App Router, Vue 3, SvelteKit, Tailwind, Supabase, Prisma, Python, Go) with fill-in-the-blank fields.
 
 ## How to Use
 
