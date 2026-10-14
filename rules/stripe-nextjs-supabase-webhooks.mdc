@@ -1,0 +1,24 @@
+---
+description: Stripe Checkout, Billing and webhooks in Next.js App Router + Supabase apps (server-side sessions, verified and idempotent webhooks, subscription-based access)
+globs: app/api/**,lib/stripe.ts,**/*stripe*
+alwaysApply: false
+---
+
+<!-- Source: https://github.com/edtrackai/ship-ready-ai-rules-free-sample (MIT) -->
+
+**Checkout**
+- Create sessions server-side only. Pass `client_reference_id: user.id` so the webhook can link the customer to the Supabase user.
+- Use Price IDs from env/config. Never take prices or amounts from the client.
+- Redirect with status 303 to `session.url`.
+
+**Webhooks** (`app/api/webhooks/stripe/route.ts`)
+1. `runtime = "nodejs"`; `const body = await request.text()`. Never `request.json()` first.
+2. `stripe.webhooks.constructEvent(body, signature, STRIPE_WEBHOOK_SECRET)`; return 400 on failure.
+3. Idempotency: record `event.id` in `stripe_events` with `status = 'pending'`. On unique violation (`23505`), look up the row: if `completed`, return 200 and stop; if still `pending`, process it again (handlers must be idempotent upserts). Set `status = 'completed'` only after processing (or enqueueing) succeeds. If processing fails, return 5xx so Stripe retries.
+4. Handle `checkout.session.completed` (link customer), `customer.subscription.created|updated|deleted` (upsert the mirrored row).
+5. Write with the admin client. Return 2xx quickly and move slow work to a queue.
+
+**Access control**
+- Grant features from the `subscriptions` row (`active`/`trialing`), not the success URL.
+- In recent Stripe API versions (`2025-03-31.basil`+), `current_period_start/end` live on subscription **items**, not the subscription. `sub.items.data[0].current_period_end` is only correct for single-item subscriptions; with multiple items, pick the item whose price grants the entitlement. Check the installed `stripe` types.
+- Test locally with `stripe listen` and `stripe trigger checkout.session.completed`.
