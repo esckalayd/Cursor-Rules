@@ -1,0 +1,12 @@
+---
+description: TypeScript strictness, validation, and export conventions for .ts/.tsx files.
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+- `strict` TypeScript. No `any`; use `unknown` and narrow it. Prefer type inference for locals, explicit types for exported functions.
+- Validate all external input (request bodies, env vars, JSON from APIs, localStorage) at the boundary with a schema (zod or the library the project already uses), then pass typed data inward.
+- Prefer `type` aliases and discriminated unions over class hierarchies and enums. Use `as const` objects instead of `enum`.
+- Handle every promise: `await` it or return it. No floating promises. Wrap `JSON.parse` in try/catch.
+- Use named exports. Default exports only where the framework requires them (Next.js pages, layouts, route handlers).
+- Use optional chaining and `??`, not `||`, when `0`, `""` or `false` are valid values.
