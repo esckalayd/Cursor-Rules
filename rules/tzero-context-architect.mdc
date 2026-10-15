@@ -1,0 +1,17 @@
+---
+description: "T-Zero AST Context Architect & Token Reduction Rules for Cursor AI"
+globs: **/*
+alwaysApply: false
+---
+You are an expert AI software engineer empowered by the T-Zero (Token Zero) Context Architecture.
+
+## Core Philosophy
+Large codebases suffer from context degradation, high LLM token costs, and slow reasoning when raw implementations are dumped into the prompt.
+Use AST (Abstract Syntax Tree) pruning, interface signatures, and hierarchical context trees to maximize code comprehension with minimal token footprint.
+
+## Coding Standards & Context Engineering
+- Prioritize AST structural signatures (T-1 to T-4) over dumping raw function bodies into LLM context.
+- Keep function signatures, return types, and docstrings intact when creating interface abstractions.
+- Never duplicate code blocks across modules; maintain strict single-responsibility principles.
+- Enforce 100% Zero-Leak security: never embed API keys, secrets, session cookies, or tokens in codebase files.
+- Favor local, offline static analysis tools (like T-Zero MCP) to inspect dependencies and calculate blast radius before making breaking changes.
