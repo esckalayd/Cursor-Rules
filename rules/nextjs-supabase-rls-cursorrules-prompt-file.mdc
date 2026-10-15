@@ -1,0 +1,10 @@
+---
+description: Migrations and row-level security
+globs: supabase/**
+alwaysApply: false
+---
+- For each newly created table, enable row level security and define its policies in the same migration.
+- Policies use (select auth.uid()) for performance; separate policies per command (select/insert/update/delete).
+- Add indexes on every column used in a policy or foreign key.
+- Never disable RLS to 'make it work'. If a query fails, fix the policy and explain it.
+- Regenerate types after schema changes with `supabase gen types typescript --local`, writing to the project's existing types file (create its folder first if it doesn't exist).
