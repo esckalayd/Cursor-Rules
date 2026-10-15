@@ -176,6 +176,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Blender Python Add-ons](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/blender-python-addon.mdc) - Operators, panels, properties, registration, and API-safe scripting.
 - [DragonRuby Best Practices](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/dragonruby-best-practices-cursorrules-prompt-file.mdc) - DragonRuby development with best practices integration.
 - [GameMaker GML](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/gamemaker-gml.mdc) - GameMaker Language projects, objects, events, rooms, data structures, and performance-minded gameplay code.
+- [Godot 4 (GDScript 2.0)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/godot4-gdscript2.mdc) - Godot 4 GDScript 2.0 syntax and Callable-based signals, avoiding Godot 3 patterns.
 - [Graphical Apps Development](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/graphical-apps-development-cursorrules-prompt-file.mdc) - Interactive visual application development.
 - [Unity (C#)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/unity-cursor-ai-c-cursorrules-prompt-file.mdc) - Unity development with C# integration.
 
