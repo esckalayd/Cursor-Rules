@@ -1,0 +1,40 @@
+---
+description: Secrets handling, input validation, authentication/authorization and dependency hygiene rules
+globs: 
+alwaysApply: true
+---
+# Security rules
+
+## Secrets
+- Never put API keys, tokens, passwords, private keys or connection strings in source, tests, fixtures, logs, error messages or commit messages.
+- Read secrets from environment variables (or a secret manager). Validate their presence at startup and fail fast.
+- `.env*` files stay out of git, except `.env.example` with dummy values. If a secret was ever committed, treat it as leaked: rotate it. Removing it from history is not enough.
+- Never expose server secrets to the browser. In Next.js, only `NEXT_PUBLIC_*` variables reach the client, so never prefix a secret with it.
+
+## Input validation
+- Treat everything from outside the process as untrusted: request bodies, query strings, headers, cookies, webhooks, files, environment and LLM output.
+- Validate at the boundary with a schema (`zod` in TS, `pydantic` in Python). Check types, lengths, ranges and enums. Reject or strip unknown keys.
+- File uploads: check size and MIME type (by content when possible), generate server-side names, and never use a user-supplied path (path traversal).
+
+## Authentication & authorization
+- Use the framework's or a proven library's auth. Don't write your own crypto, password hashing or session tokens. If you must hash, use argon2id or bcrypt.
+- **Authorize every server action and API route.** Check that the current user may act on *this* resource (owner or role) on the server. Hiding a button is not authorization.
+- Never trust client-sent `userId`, `role`, `price` or `isAdmin`. Derive them from the session or the database.
+- Cookies: `HttpOnly`, `Secure`, `SameSite=Lax` (or `Strict`). Protect state-changing requests against CSRF.
+- Verify webhook signatures (HMAC) with a constant-time comparison, and be idempotent.
+
+## Injection & output
+- SQL: parameterized queries or an ORM's query builder. Never interpolate strings.
+- Shell: avoid it. If you can't, pass an args array (`execFile`, `subprocess.run([...])`) and never use `shell=True` with input.
+- HTML: rely on framework escaping. Treat `dangerouslySetInnerHTML` and `v-html` as forbidden unless sanitized (DOMPurify).
+- SSRF: never fetch user-supplied URLs server-side without an allowlist.
+- Don't leak stack traces or internal errors to clients. Log them server-side without secrets or PII.
+
+## Dependencies
+- Before adding a package, check that it's maintained, widely used and has no open critical advisories. Check for typosquatting: confirm the exact name and publisher.
+- Run `npm audit --omit=dev` / `pip-audit` after dependency changes. Keep the lockfile committed.
+- Never run install scripts or binaries from untrusted sources. Don't `curl | sh`.
+
+## AI-specific
+- Treat LLM output and tool results as untrusted input: validate before executing, storing or rendering.
+- Never put secrets in prompts. Don't let model output choose file paths, SQL or shell commands without validation.
