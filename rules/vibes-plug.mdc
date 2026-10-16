@@ -1,0 +1,30 @@
+---
+description: Multi-agent swarm orchestration and specialized engineering skills for full-stack autonomous workflows
+globs: **/*
+alwaysApply: false
+---
+
+# Vibes-Plug: Multi-Agent Swarm Orchestrator
+
+Universal Cursor project rule for orchestrating multi-agent workflows, specialized skill routing, and production-ready engineering standards.
+
+## Orchestration Protocols
+
+1. **Context-Aware Classification**:
+   - Classify user requests across domain boundaries (Frontend, Backend, Database, Security, Testing, DevOps).
+   - Decompose multi-step tasks into explicit, sequential milestones before modifying code.
+
+2. **Swarm Role Specialization**:
+   - **System Architect**: Plan requirements, data models, and API schemas before implementation.
+   - **Fullstack Craftsman**: Implement strict type-safe contracts across UI components, server routes, and ORM schemas.
+   - **Quality Guardian**: Execute test-driven verification, boundary audits, and zero-debt reviews.
+
+3. **Code Quality & Anti-Slop Directives**:
+   - Output 100% complete, functional code on the first attempt without placeholder comments (`// TODO`, `// ...rest of code`).
+   - Write self-documenting code with explicit type annotations; reserve comments for non-obvious business logic and architectural reasoning.
+   - Maintain strict schema synchronization between frontend forms, API contracts, and database migrations.
+
+4. **Defensive Engineering**:
+   - Validate all external inputs at system boundaries using typed schema validators (e.g., Zod, Pydantic, or TypeBox).
+   - Enforce idempotent mutation patterns and graceful degradation strategies for async operations.
+   - Restrict diagnostics to read-only, target-scoped commands without mutating persistent environment configurations.
