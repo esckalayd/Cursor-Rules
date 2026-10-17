@@ -1,0 +1,50 @@
+---
+description: Conventions for building MCP (Model Context Protocol) tool servers in TypeScript with @modelcontextprotocol/sdk — tool schema design, stdio hygiene, input bounding, error shaping and tests.
+globs: ["src/**/*.ts", "server/**/*.ts", "mcp/**/*.ts"]
+alwaysApply: false
+---
+# MCP tool server (TypeScript)
+
+## Project facts (edit these)
+- Runtime: Node 20+, ESM (`"type": "module"`)
+- SDK: `@modelcontextprotocol/sdk` (`McpServer` + `StdioServerTransport` or `StreamableHTTPServerTransport`)
+- Schema library: `zod` (the SDK accepts zod shapes for tool inputs)
+- Entry point: `src/index.ts`
+- Test: `npm test` · Lint: `npm run lint` · Typecheck: `npx tsc --noEmit`
+
+## Before you say "done"
+- `npm test`, `npm run lint` and `npx tsc --noEmit` all pass.
+- `npx @modelcontextprotocol/inspector node dist/index.js` lists every tool and each sample call returns structured content.
+
+## Tool design
+- One tool, one job. Name tools `verb_noun` in snake_case (`search_issues`, `read_file`).
+- The description says WHEN the model should pick this tool, in 1–2 sentences, not only what it does.
+- Every input is a `zod` field with `.describe()`. Prefer `z.enum([...])` to free-text when the value set is known.
+- Bound every input: `.max()` on strings, `.int().min().max()` on numbers, allow-lists for hosts and base paths.
+- Return compact structured results. Truncate large outputs and state that they were truncated and how to page.
+- Do not return more than the caller asked for; summarize lists and expose an `offset`/`cursor` input instead.
+
+## Errors
+- Validation and runtime failures return `{ content: [{ type: "text", text: "<actionable message>" }], isError: true }`.
+- Never leak stack traces, file system paths outside the sandbox, or secret values in error text.
+- Map upstream HTTP failures to a short cause plus what the model can change (`"rate limited; retry after 30s"`).
+
+## stdio hygiene
+- With the stdio transport, `stdout` is the protocol channel. Log ONLY to `stderr` (`console.error`) — one stray `console.log` corrupts the stream.
+- No interactive prompts, no TTY assumptions; the server runs headless under a client.
+- Handle `SIGINT`/`SIGTERM` by closing the transport before exit.
+
+## Security
+- Secrets come from environment variables only; never hard-code, log or echo them in tool output.
+- Resolve and check every path against an allowed root (`path.resolve` + prefix check) before reading or writing.
+- Tools that delete, write or send must say so in the description and require an explicit `confirm: true` input.
+- Outbound HTTP only to an allow-list of hosts; set timeouts and a response-size cap.
+
+## Boundaries
+- Do not edit generated files or the lockfile by hand.
+- Do not add a dependency for something under ~30 lines of code.
+- Keep the server's public tool list stable; rename only with a deprecation note in the README.
+
+## Definition of done
+- Each new or changed tool has a test that calls it THROUGH the server (`Client` + `InMemoryTransport`), not only the handler function.
+- The README tool table (name, when to use, inputs) is updated whenever a tool is added, renamed or removed.
