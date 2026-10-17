@@ -121,6 +121,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Elixir Engineer Guidelines](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/elixir-engineer-guidelines-cursorrules-prompt-file.mdc) - Elixir development with engineer guidelines.
 - [Elixir (Phoenix, Docker)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/elixir-phoenix-docker-setup-cursorrules-prompt-fil.mdc) - Elixir development with Phoenix and Docker integration.
 - [ES Module (Node.js)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/es-module-nodejs-guidelines-cursorrules-prompt-fil.mdc) - ES Module development with Node.js guidelines.
+- [Full-Stack Next.js + Expo (Hono, Drizzle, Better Auth)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/full-stack-nextjs-expo-hono-drizzle-better-auth.mdc) - Practical architecture and security guidance for full-stack TypeScript apps across web and mobile.
 - [Go Backend Scalability](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/go-backend-scalability-cursorrules-prompt-file.mdc) - Go development with backend scalability.
 - [Go ServeMux REST API](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/go-servemux-rest-api-cursorrules-prompt-file.mdc) - Go development with ServeMux REST API integration.
 - [Go (Basic Setup)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/htmx-go-basic-cursorrules-prompt-file.mdc) - Go development with basic setup.

@@ -1,0 +1,53 @@
+---
+description: "Practical architecture and security guidance for full-stack TypeScript apps using Next.js, Expo, Hono, Drizzle ORM, and Better Auth."
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+# Full-Stack TypeScript with Next.js and Expo
+
+Use this rule when a project combines a Next.js web app, an Expo mobile app, Hono HTTP APIs, Drizzle ORM, and Better Auth. Follow the versions and structure already present in the repository; do not introduce a second stack to solve a local problem.
+
+## Keep platform and server boundaries clear
+
+- Keep business rules, validation schemas, and API types in modules that do not import web or native UI code.
+- Use Next.js for web routing and rendering, and Expo Router for native navigation. Keep platform-specific UI in platform-specific files when behavior differs.
+- Treat Hono as the canonical HTTP API when the project uses it. Keep route handlers thin and put reusable business logic in the service or domain layer.
+- Do not import database clients, server-only environment variables, or secret-bearing modules into browser or native bundles.
+- Read the package manifests and existing architecture before adding dependencies or changing framework boundaries.
+
+## Validate and authorize every API request
+
+- Parse and validate path parameters, query parameters, and request bodies at the Hono boundary with the project's existing validation library.
+- Keep request and response types aligned with the schemas used by the server; avoid maintaining separate handwritten copies in each client.
+- Resolve the authenticated user from the server-side Better Auth session or trusted request context. Never treat a client-supplied user ID as proof of identity.
+- Check authorization for every object or workspace on the server before reading or changing it. Apply the same rule to list, detail, and mutation routes.
+- Return consistent status codes and error shapes. Do not expose stack traces, database details, tokens, or private records in client responses.
+
+## Use Drizzle with explicit data constraints
+
+- Define primary keys, foreign keys, uniqueness, and indexes in the Drizzle schema and its migrations. Use database constraints for invariants that must survive concurrent requests.
+- Scope tenant-owned reads and writes by the authenticated tenant in the database query itself.
+- Use a transaction when a business operation needs multiple database writes to succeed or fail together.
+- Select only the fields needed by the caller, and map database records to explicit API responses instead of returning internal rows wholesale.
+- Review generated migrations before applying them. Keep schema changes reversible where the migration system supports it.
+
+## Keep client state predictable
+
+- Use server rendering for data that is needed for the initial web response. If the app uses TanStack Query, hydrate its cache rather than fetching the same data again immediately in the browser.
+- Use TanStack Query for client-owned server state, with stable query keys that include the resource identity and active filters.
+- After mutations, invalidate the affected queries or update them with an optimistic change that can be rolled back on failure.
+- Keep form state and ephemeral UI state local to the relevant screen; do not mirror server state in a second global store without a concrete need.
+
+## Handle authentication across web and native apps
+
+- Use Better Auth's configured session flow for each platform. Follow the project's existing web cookie and native token/session integration rather than inventing a parallel mechanism.
+- Keep signing secrets and private API credentials on the server. Public build-time variables are not secrets, even when their names look obscure.
+- Use the auth library's supported secure storage integration for native sessions. Never log credentials, authorization headers, or session tokens.
+- On sign-out or account changes, clear platform session state and any user-scoped client cache.
+
+## Verify changes at the right boundary
+
+- Add focused tests for validation, authorization, and database constraints when those behaviors change.
+- Exercise API behavior through the same route stack used in production, and cover web and native behavior separately when their session or navigation flows differ.
+- Run the repository's documented type-check, lint, and test commands. Do not claim a check passed unless it was run and its result was read.
