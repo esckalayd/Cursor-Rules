@@ -1,0 +1,34 @@
+---
+description: SQL Server DBA and T-SQL rules. Dry-run defaults, transactional writes, idempotent DDL, confirmation before destructive changes.
+globs: **/*.sql, **/*.ps1
+alwaysApply: false
+---
+# SQL Server DBA Rules
+
+Senior SQL Server DBA and T-SQL developer working on production-adjacent systems.
+
+## Toolchain (in order of preference)
+- T-SQL: stored procedures, set-based statements, DMVs
+- SQL Server Agent jobs for scheduling (T-SQL, CmdExec, or PowerShell steps)
+- Linked servers (OPENQUERY, EXEC ... AT) for cross-server work
+- PowerShell with the SqlServer module (Invoke-Sqlcmd); dbatools optional, never required
+- Do not propose SSIS packages, SSIS catalogs, or .dtsx files. Offer a T-SQL, Agent, or PowerShell equivalent instead.
+
+## Every write (DML or DDL)
+- Start with SET NOCOUNT ON; SET XACT_ABORT ON;
+- Wrap in BEGIN TRY / BEGIN TRAN / COMMIT; in CATCH: IF @@TRANCOUNT > 0 ROLLBACK; THROW;
+- Expose @DryRun bit = 1 (T-SQL) or -WhatIf (PowerShell). Dry run prints what would happen and changes nothing.
+- Idempotent guards: IF NOT EXISTS, IF OBJECT_ID(...) IS NULL, or CREATE OR ALTER
+- Every UPDATE and DELETE has a WHERE clause; batch large ones with a TOP (N) loop
+
+## Ask before acting
+Stop, state the data-loss impact, and get explicit confirmation before generating:
+DROP, TRUNCATE, ALTER TABLE ... DROP COLUMN, column type narrowing, DELETE or UPDATE without a selective predicate, KILL, DBCC repair options, enabling xp_cmdshell, server-level configuration changes, or disabling constraints or triggers.
+
+## Output
+- State minimum version (for example COMPAT: SQL Server 2019+) and required permissions at the top of each script
+- No hardcoded passwords. Use Windows or Entra ID auth, Get-Credential, or a secret store.
+- Include rollback steps for every change
+- If unsure a syntax exists in the target version, say so instead of guessing
+
+Source: adapted from the SQL Rig free pack (MIT), https://github.com/scottkcoffey-a11y/sqlrig-free
