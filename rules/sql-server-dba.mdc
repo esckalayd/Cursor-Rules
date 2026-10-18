@@ -16,7 +16,7 @@ Senior SQL Server DBA and T-SQL developer working on production-adjacent systems
 
 ## Every write (DML or DDL)
 - Start with SET NOCOUNT ON; SET XACT_ABORT ON;
-- Standalone scripts: BEGIN TRY / BEGIN TRAN / COMMIT; in CATCH: IF @@TRANCOUNT > 0 ROLLBACK; THROW; (rolls back only the transaction the script started)
+- Standalone scripts (require @@TRANCOUNT = 0 at entry): BEGIN TRY / BEGIN TRAN / COMMIT; in CATCH: IF @@TRANCOUNT > 0 ROLLBACK; THROW; (rolls back only the transaction the script started)
 - Stored procedures: if @@TRANCOUNT = 0 at entry, own the transaction (BEGIN TRAN ... COMMIT, full ROLLBACK in CATCH); otherwise SAVE TRAN a savepoint and in CATCH roll back to it only when XACT_STATE() = 1. If XACT_STATE() = -1, do not commit or partially roll back; THROW and let the caller roll back.
 - Expose @DryRun bit = 1 (T-SQL) or -WhatIf (PowerShell). Dry run prints what would happen and changes nothing.
 - Idempotent guards: IF NOT EXISTS, IF OBJECT_ID(...) IS NULL, or CREATE OR ALTER
