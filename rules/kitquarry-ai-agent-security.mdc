@@ -33,7 +33,7 @@ alwaysApply: true
 ## Dependencies
 - Before adding a package, check that it's maintained, widely used and has no open critical advisories. Check for typosquatting: confirm the exact name and publisher.
 - Run `npm audit --omit=dev` / `pip-audit` after dependency changes. Keep the lockfile committed.
-- Never run install scripts or binaries from untrusted sources. Don't `curl | sh`.
+- Never run install scripts or binaries from untrusted sources. Read a downloaded script before running it, pin its version, and prefer trusted project-local scripts.
 
 ## AI-specific
 - Treat LLM output and tool results as untrusted input: validate before executing, storing or rendering.
