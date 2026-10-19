@@ -8,19 +8,19 @@ alwaysApply: false
 When you create or change a table in a Supabase `public` schema, do ALL of the following in the **same migration**:
 
 1. **Enable RLS:** `alter table public.<table> enable row level security;`
-2. **Add a policy per operation, scoped to the user** (not just to a role):
+2. **Add a policy per operation, scoped to the user** (not just to a role), unless the data is public on purpose (see below):
    - `SELECT` / `DELETE`: `using (user_id = (select auth.uid()))`
    - `INSERT`: `with check (user_id = (select auth.uid()))`
    - `UPDATE`: **both** `using (...)` and `with check (...)`
 
    For team/workspace data, scope by membership, not by role alone.
-3. **Grant access explicitly.** Since Oct 30 2026, new tables in `public` are not exposed to the Data API without a grant:
+3. **Grant access explicitly.** Starting Oct 30 2026, new tables in `public` are not exposed to the Data API without a grant:
    `grant select, insert, update, delete on public.<table> to authenticated;`
    Grant to `anon` only for data that is genuinely public. For a `serial`/`bigserial` id the API inserts into, also `grant usage on sequence public.<table>_id_seq to authenticated;`
 
 **Never:**
 - Ship the `service_role` key (or any `sb_secret_...` key) to the browser, or put it in a `NEXT_PUBLIC_*` variable. It bypasses RLS entirely — server-side only.
-- Use `using (true)` or `with check (true)` on a table a client role can reach. RLS is "on" but every row is exposed.
+- Use `using (true)` or `with check (true)` on private data a client role can reach. RLS is "on" but every row is exposed. For a table that is public on purpose (a catalog, pricing), a read-only `for select to anon, authenticated using (true)` is fine: say so in a comment and don't add write policies for those roles.
 - "Fix" a `42501 permission denied for table` by running `grant ... on all tables in schema public`. That re-grants every table, including ones with RLS off, re-exposing them. Grant the one table instead.
 
 **Good to know:**
@@ -29,4 +29,4 @@ When you create or change a table in a Supabase `public` schema, do ALL of the f
 
 **Verify (rules are advisory — prove it):**
 - In CI, fail the build when a migration creates a table without RLS.
-- Against the live database, connect with the anon key and confirm each table returns nothing without a login.
+- Against the live database, connect with the anon key and confirm every private table returns nothing without a login (public-on-purpose tables are the only exception).
