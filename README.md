@@ -311,6 +311,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 ### Security
 
 - [DevSecOps, SSDLC, and AppSec](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/security-devsecops-ssdls-appsec.mdc) - Secure coding, secret handling, dependency hygiene, authentication, authorization, security testing, and compliance documentation.
+- [Supabase (RLS Security)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/supabase-rls-security-cursorrules-prompt-file.mdc) - RLS on every table, policies scoped to the user, explicit grants, and keeping the service_role key out of the browser. Framework-agnostic.
 
 ### Documentation
 
