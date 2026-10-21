@@ -1,0 +1,16 @@
+---
+description: Error handling with ProblemDetail (RFC 9457)
+globs: src/main/java/**/*.java
+alwaysApply: false
+---
+# Error handling
+
+- Set `spring.mvc.problemdetails.enabled=true`. All error responses are `ProblemDetail` (RFC 9457, `application/problem+json`).
+- One `@RestControllerAdvice` named `GlobalExceptionHandler` in `common.error`, extending `ResponseEntityExceptionHandler`.
+- Domain exceptions extend a single `abstract class DomainException extends RuntimeException` and carry an `HttpStatus` and stable `errorCode` (e.g. `ORDER_NOT_FOUND`), added as a `ProblemDetail` property.
+- Use `NotFoundException`, `ConflictException`, `ValidationException` subclasses; throw from services, never from controllers.
+- Never catch `Exception` just to log and rethrow. Catch only what you can handle.
+- Unhandled exceptions → 500 with a generic detail; log the stack trace once, server-side, with a correlation id. Never return stack traces or SQL messages to clients.
+- `Optional` is a return type only: `repo.findById(id).orElseThrow(() -> new NotFoundException("Order", id))`.
+
+<!-- Free sample from the rules packs by RDJArc (https://codebaserules.com). -->

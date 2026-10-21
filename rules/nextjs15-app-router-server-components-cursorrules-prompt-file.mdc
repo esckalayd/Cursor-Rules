@@ -1,0 +1,18 @@
+---
+description: App Router files, Server/Client Components and data fetching
+globs: src/app/**/*.tsx,src/app/**/*.ts,src/components/**/*.tsx,src/features/**/*.tsx
+alwaysApply: false
+---
+# Routing, components & data fetching
+
+- Route files: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx` (must be `"use client"`), `not-found.tsx`, `route.ts`. Route groups `(marketing)`, private folders `_components`.
+- In Next.js 15 `params` and `searchParams` are Promises: `export default async function Page({ params }: { params: Promise<{ id: string }> }) { const { id } = await params; }`. Same for `cookies()` and `headers()`. Always `await` them.
+- Fetch data in Server Components by calling `src/features/<f>/queries.ts` functions directly. Don't call your own Route Handlers from Server Components.
+- `fetch` is not cached by default in Next 15: opt in explicitly with `{ next: { revalidate: N, tags: [...] } }` or `"use cache"` only if enabled. Be explicit about caching on every external fetch.
+- Use `<Link>` for navigation, `next/image` for images (with `width`/`height` or `fill` + `sizes`), `next/font` for fonts.
+- Export `metadata` or `generateMetadata` from every `page.tsx`.
+- Wrap slow sections in `<Suspense>` with a skeleton rather than blocking the whole page.
+- Components: named exports, one component per file, file name `kebab-case.tsx`, component `PascalCase`. Props type named `<Component>Props`.
+- Never pass non-serializable values (functions other than Server Actions, class instances, Dates→ convert to ISO string) from Server to Client Components.
+
+<!-- Free sample from the rules packs by RDJArc (https://codebaserules.com). -->
