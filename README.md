@@ -191,6 +191,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [React (Chakra UI)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/react-chakra-ui-cursorrules-prompt-file.mdc) - React development with Chakra UI integration.
 - [RTL / Right-to-Left (i18n, Tailwind, React Native)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/rtl-right-to-left-i18n-cursorrules-prompt-file.mdc) - RTL development with logical CSS properties, Tailwind logical classes, bidirectional text, and automated auditing via rtlify-ai.
 - [Toss-Style Design System](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/toss-style-design-system.mdc) - Disciplined product UI with restrained color, grayscale hierarchy, typography, cards, metrics, dark mode, and accessibility.
+- [UI Design Consistency](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/ui-design-consistency.mdc) - Keeping AI-built UI on one design: colour tokens, type scale, spacing, component reuse, interaction states, and responsive checks.
 
 ### State Management
 

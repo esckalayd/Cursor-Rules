@@ -1,0 +1,40 @@
+---
+description: Keep AI-built UI on one consistent design - colour tokens, type scale, spacing and component reuse - by following a design template in the project.
+globs: **/*.tsx, **/*.jsx, **/*.css, **/*.html, **/*.vue, **/*.svelte
+alwaysApply: false
+---
+
+# UI design consistency
+
+Use a single design reference for all UI work, for example `design/template.html` in this project. Read it before building any page or component.
+
+## Colours
+- Use only named colour tokens defined once in the theme (Tailwind config or CSS variables): background, surface, text, muted text, border, accent, success, warning, error.
+- Do not write raw hex, rgb or hsl values in components.
+- Use one accent colour per screen, for the main action and active states only.
+
+## Type
+- Use the project's font stack and type scale only. Do not add fonts.
+- Body text is at least 15px with a line height of 1.6 or more.
+- Use sentence case for headings and buttons.
+
+## Spacing and layout
+- Use the spacing scale (4px base). Avoid one-off margins and paddings.
+- Give sections generous vertical padding and keep text columns under about 70 characters wide.
+- Every page must work at 375px wide with no horizontal scroll. Check 375, 768 and 1440.
+
+## Components
+- Search the components folder before creating UI. Reuse existing buttons, inputs, cards, badges, modals and navigation.
+- If a component needs a new look, add a variant to it. Do not create a second, slightly different copy.
+- Every interactive element has hover, focus-visible, active and disabled states, and touch targets of at least 44px on phones.
+
+## Content
+- Use real copy, never lorem ipsum. Headlines state an outcome in a few words.
+- Use one icon set at one stroke width. No emoji in the interface.
+- Design empty, loading and error states instead of leaving them blank.
+
+## Before finishing
+- List the existing components you reused and any you created.
+- Search your changes for raw colour values, new fonts and one-off spacing, and replace them with tokens.
+
+Adapted from the BrowserMoon design rules for AI coding tools (browsermoon.com).
