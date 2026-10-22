@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [Loadout](https://loadout-blush.vercel.app) - Free + Pro AI coding rule packs (Cursor `.mdc`, Copilot, Windsurf, Codex `AGENTS.md`) so agents follow project conventions.
 
 ## How to Use
 
