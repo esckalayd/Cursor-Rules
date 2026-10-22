@@ -317,6 +317,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Gherkin Style Testing](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/gherkin-style-testing-cursorrules-prompt-file.mdc) - Behavior-driven scenarios and acceptance criteria.
 - [How-To Documentation](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/how-to-documentation-cursorrules-prompt-file.mdc) - Task-oriented guides and procedural documentation.
 - [README Best Practices](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/readme-best-practices-cursorrules-prompt-file.mdc) - README documentation with best practices integration.
+- [Multi-Archetype Benchmark-First Protocol](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/benchmark-first-protocol-cursorrules-prompt-file.mdc) - Enforces live multi-archetype web reference benchmarking across UI/UX, typography, motion graphics, copywriting, product strategy, and system architecture before code or content edits to prevent memory-only AI guessing and decorative UI clutter ([source repo](https://github.com/longwave-ai-lab/anti-slop-ai-harness)).
 
 ## Directories
 
