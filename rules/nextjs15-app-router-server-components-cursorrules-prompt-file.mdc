@@ -14,5 +14,3 @@ alwaysApply: false
 - Wrap slow sections in `<Suspense>` with a skeleton rather than blocking the whole page.
 - Components: named exports, one component per file, file name `kebab-case.tsx`, component `PascalCase`. Props type named `<Component>Props`.
 - Never pass non-serializable values (functions other than Server Actions, class instances, Dates→ convert to ISO string) from Server to Client Components.
-
-<!-- Free sample from the rules packs by RDJArc (https://codebaserules.com). -->

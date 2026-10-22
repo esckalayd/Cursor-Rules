@@ -14,5 +14,3 @@ alwaysApply: false
 - Never return ORM objects without a response schema; never accept ORM models as input.
 - Pagination: `limit: int = Query(20, ge=1, le=100)`, `offset: int = Query(0, ge=0)`; return `Page[XRead]` with `items` and `total`.
 - Dependencies (`get_current_user`, `SessionDep`) are `Annotated` aliases defined in `deps.py`.
-
-<!-- Free sample from the rules packs by RDJArc (https://codebaserules.com). -->
