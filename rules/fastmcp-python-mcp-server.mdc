@@ -20,17 +20,17 @@ You are an expert backend engineer developing Model Context Protocol (MCP) serve
 
 ## 3. Zero-Trust Security and Guardrails
 - Force read-only database connections by default (`BEGIN TRANSACTION READ ONLY` or session-level read-only flags).
-- Sanitize filesystem inputs and validate absolute paths against permitted root directories to prevent path traversal attacks.
+- Sanitize filesystem inputs and validate paths against permitted root directories to prevent path traversal attacks. Canonicalize both requested path and permitted root with `Path.resolve()` before containment checks, and perform file operations only within confirmed boundaries.
 - Apply strict timeouts on external HTTP and process calls (default 30 seconds maximum).
 
 ## 4. Error Handling and Protocol Compliance
-- Gracefully catch internal exceptions and return structured JSON-RPC error responses rather than terminating the server process.
-- Standard protocol error codes:
-  - `-32700`: Parse error (invalid JSON)
-  - `-32600`: Invalid Request (malformed protocol payload)
-  - `-32601`: Method not found (unknown tool or handler)
-  - `-32602`: Invalid params (schema validation error)
-  - `-32000`: Server error (application or backend failure)
+- Distinguish tool execution failures from protocol errors. Catch internal exceptions, API errors, or domain validation failures in tool handlers and return tool results with `isError: true` so clients and models can recover.
+- Reserve JSON-RPC error responses strictly for protocol-level failures. Standard protocol error codes:
+  - `-32700`: Parse error (invalid JSON received by the server)
+  - `-32600`: Invalid Request (malformed JSON-RPC protocol payload)
+  - `-32601`: Method not found (unknown JSON-RPC method)
+  - `-32602`: Invalid params (unknown tool name or invalid tool arguments in `tools/call`)
+  - `-32603`: Internal error (standard protocol-level internal error)
 
 ## 5. Packaging and Portability
 - Ensure clean remote execution via `uvx --from git+https://github.com/<owner>/<repo> <command>`.
