@@ -1,0 +1,17 @@
+---
+description: App Router files, Server/Client Components and data fetching (TypeScript)
+globs: app/**/*.tsx,app/**/*.ts,src/app/**/*.tsx,src/app/**/*.ts,src/components/**/*.tsx,src/features/**/*.tsx,src/features/**/*.ts
+alwaysApply: false
+---
+# Routing, components & data fetching
+
+- Route files: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx` (must be `"use client"`), `not-found.tsx`, `route.ts`. Route groups `(marketing)`, private folders `_components`.
+- In Next.js 15 `params` and `searchParams` are Promises. In Server Components, `await` them: `export default async function Page({ params }: { params: Promise<{ id: string }> }) { const { id } = await params; }`. Client Components cannot be `async`; read the Promise prop with React `use(params)` instead.
+- `cookies()` and `headers()` (from `next/headers`) are async and server only: `await` them in Server Components, Route Handlers and Server Actions, never in a Client Component.
+- Fetch data in Server Components by calling `src/features/<f>/queries.ts` functions directly. Don't call your own Route Handlers from Server Components.
+- `fetch` is not cached by default in Next 15. Choose a cache policy explicitly on every external fetch: `{ cache: "no-store" }` for request specific or freshness sensitive data, `{ cache: "force-cache" }` or `{ next: { revalidate: N, tags: [...] } }` for shared data, or `"use cache"` only if enabled.
+- Use `<Link>` for navigation, `next/image` for images (with `width`/`height` or `fill` + `sizes`), `next/font` for fonts.
+- Define `metadata` or `generateMetadata` in a `page.tsx` or `layout.tsx` when a route needs its own title or description. They work only in Server Components, so never export them from a file marked `"use client"`; move the interactive part into a child Client Component.
+- Wrap slow sections in `<Suspense>` with a skeleton rather than blocking the whole page.
+- Non-route components: named exports, one component per file, file name `kebab-case.tsx`, component `PascalCase`. Props type named `<Component>Props`. App Router special files keep their reserved names and the exports Next.js requires (default export for `page`, `layout`, `loading`, `error`, `not-found`; named `GET`/`POST` handlers for `route.ts`).
+- Only pass serializable props from Server to Client Components: primitives, plain objects, arrays, `Date`, `Map`, `Set`, `Promise`, JSX and Server Actions. Never pass plain functions or class instances.
