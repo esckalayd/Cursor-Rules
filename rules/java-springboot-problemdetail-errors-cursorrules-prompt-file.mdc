@@ -1,14 +1,15 @@
 ---
-description: Error handling with ProblemDetail (RFC 9457)
+description: Spring Boot 3+ error handling with ProblemDetail (RFC 9457)
 globs: src/main/java/**/*.java
 alwaysApply: false
 ---
 # Error handling
 
-- Set `spring.mvc.problemdetails.enabled=true`. All error responses are `ProblemDetail` (RFC 9457, `application/problem+json`).
+- Use this rule with Spring Boot 3+ and Spring Framework 6+ (`ProblemDetail` does not exist in Spring Boot 2).
+- Set `spring.mvc.problemdetails.enabled=true`. Spring MVC's built in exceptions then render as `ProblemDetail` (RFC 9457, `application/problem+json`). Errors that never reach a controller advice (servlet filters, the container) still go to Boot's `/error` mapping and its default JSON, so do not assume every error response is a `ProblemDetail`.
 - One `@RestControllerAdvice` named `GlobalExceptionHandler` in `common.error`, extending `ResponseEntityExceptionHandler`.
-- Domain exceptions extend a single `abstract class DomainException extends RuntimeException` and carry an `HttpStatus` and stable `errorCode` (e.g. `ORDER_NOT_FOUND`), added as a `ProblemDetail` property.
+- Domain exceptions extend a single `abstract class DomainException extends RuntimeException` and carry an `HttpStatus` and stable `errorCode` (e.g. `ORDER_NOT_FOUND`). `ResponseEntityExceptionHandler` does not map them on its own: add `@ExceptionHandler(DomainException.class)` that returns `ProblemDetail.forStatusAndDetail(ex.getStatus(), ex.getMessage())` with `setProperty("errorCode", ex.getErrorCode())`. (Alternative: extend `ErrorResponseException` instead of `RuntimeException`.)
 - Use `NotFoundException`, `ConflictException`, `ValidationException` subclasses; throw from services, never from controllers.
-- Never catch `Exception` just to log and rethrow. Catch only what you can handle.
-- Unhandled exceptions → 500 with a generic detail; log the stack trace once, server-side, with a correlation id. Never return stack traces or SQL messages to clients.
+- Add a fallback `@ExceptionHandler(Exception.class)` in `GlobalExceptionHandler`: return a 500 `ProblemDetail` with a generic detail and a `correlationId` property, and log the stack trace once, server-side, with that correlation id. `ResponseEntityExceptionHandler` rethrows exceptions it does not know. Never return stack traces or SQL messages to clients.
+- Outside that fallback, never catch `Exception` just to log and rethrow. Catch only what you can handle.
 - `Optional` is a return type only: `repo.findById(id).orElseThrow(() -> new NotFoundException("Order", id))`.

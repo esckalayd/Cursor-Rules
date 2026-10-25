@@ -6,11 +6,12 @@ alwaysApply: false
 # Routers & schemas
 
 - One `APIRouter(prefix="/<plural-resource>", tags=["<resource>"])` per feature; mounted in `main.py` under `/api/v1`.
-- Endpoints are `async def`, thin: parse → call service → return schema. No SQL or business rules in routers.
-- Always declare `response_model` (or return-type annotation) and explicit `status_code` (`201` create, `204` delete).
+- Endpoints are thin: parse → call service → return schema. No SQL or business rules in routers.
+- Use `async def` when the endpoint awaits async I/O (async SQLAlchemy session, `httpx.AsyncClient`). Use plain `def` for blocking libraries (sync ORM or HTTP client); FastAPI runs it in a threadpool. Never call blocking code inside `async def`.
+- Declare `response_model` (or a return type annotation) and an explicit `status_code` (`201` create). For `204` deletes use `response_model=None` or a `-> None` return type and return no body; a `204` route with a response model fails at startup.
 - Schema naming: `XCreate`, `XUpdate` (all fields optional, apply with `model_dump(exclude_unset=True)`), `XRead`.
 - Pydantic v2 only: `model_config = ConfigDict(from_attributes=True, extra="forbid")` on input models; `model_validate`, `model_dump`, `field_validator`, `model_validator`. Never v1 APIs (`.dict()`, `.parse_obj`, `class Config`, `orm_mode`, `@validator`).
-- Constrain inputs: `Annotated[str, StringConstraints(min_length=1, max_length=200)]`, `EmailStr`, `PositiveInt`.
+- Constrain inputs: `Annotated[str, StringConstraints(min_length=1, max_length=200)]`, `EmailStr` (needs the optional `email-validator` package, e.g. `pydantic[email]`), `PositiveInt`.
 - Never return ORM objects without a response schema; never accept ORM models as input.
 - Pagination: `limit: int = Query(20, ge=1, le=100)`, `offset: int = Query(0, ge=0)`; return `Page[XRead]` with `items` and `total`.
-- Dependencies (`get_current_user`, `SessionDep`) are `Annotated` aliases defined in `deps.py`.
+- Dependency callables such as `get_current_user` and reusable `Annotated` aliases such as `CurrentUser` and `SessionDep` are defined in `deps.py`. Pass the callable to `Depends(...)`; use the alias as the parameter type.
