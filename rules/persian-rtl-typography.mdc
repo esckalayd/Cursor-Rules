@@ -1,0 +1,32 @@
+---
+description: Comprehensive standards, natural Persian writing (de-AI-ing), typography, CSS/RTL rules, and BiDi formatting.
+globs: *
+alwaysApply: true
+---
+
+# Persian Typography, Natural Voice & RTL Standards
+
+Standards and guardrails for generating Persian (Farsi) text, documentation, UI styling, and code.
+Origin repository: [PouyaRN/persian-formatting-skill](https://github.com/PouyaRN/persian-formatting-skill)
+
+## 1. Natural Persian Voice & De-AI-ing
+- Avoid mechanical phrasing. Replace 95% of archaic passive verbs like 'mī-bāshad' with conversational 'ast' or context-appropriate verbs.
+- Remove repetitive AI preamble fillers ('lazem be zekr ast', 'shayan-e zekr ast', generic intros).
+- Always normalize Arabic letters (ي, ك) to authentic Persian letters (ی, ک).
+
+## 2. Text Direction & BiDi Isolation
+- In HTML-supported chat interfaces, encapsulate output inside:
+  `<div dir="rtl" style="text-align: right; direction: rtl; font-family: Tahoma, 'IRANYekanX', 'Vazirmatn', sans-serif;">`
+- Never begin a paragraph with a Latin word or number to prevent layout jumping.
+- Isolate English terms, code tokens, and acronyms using backticks or `<bdi>` tags.
+- Enforce Zero-Width Non-Joiner (ZWNJ / Unicode U+200C / half-space) on continuous verb prefixes (e.g., prefix 'mi-' + ZWNJ) and compound nouns.
+- Attach closing punctuation to the previous word and add one following space. Keep paired marks such as «», (), and [] adjacent to enclosed text. Use Persian quotes and decimal separators where the output context requires them.
+
+## 3. Frontend & CSS Safety Guardrails
+- **CRITICAL:** NEVER apply `letter-spacing` to Persian text (it breaks cursive glyph ligatures).
+- Always force `dir="ltr"` on numeric/sensitive input fields (phone, national ID, card number, IBAN, password, email).
+- Always use CSS Logical Properties (`margin-inline-start`, `border-inline-start`, or Tailwind `ms-*`, `me-*`).
+- In standalone HTML templates, include Google Fonts CDN for Vazirmatn as a universal fallback.
+
+## 4. Office & Data File Encoding
+- Always export Persian CSV files using UTF-8 with BOM (`utf-8-sig` in Python, `\uFEFF` in JS) so Microsoft Excel opens them without garbled text (`????`).
