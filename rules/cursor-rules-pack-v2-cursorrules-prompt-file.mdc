@@ -5,7 +5,6 @@ alwaysApply: false
 ---
 # Cursor Rules Pack v2 — Sample Rules
 # 7 production-tested rules from the full 50-rule pack
-# Full pack: https://oliviacraftlat.gumroad.com/l/wyaeil
 
 ## Rule 1 — Dependency Discipline
 Before suggesting a new npm package: (1) state what it does in one sentence, (2) check if it's actively maintained (last publish < 6 months), (3) confirm whether we could implement it in < 30 lines without the dependency. Prefer fewer, well-maintained packages. Never add a dependency for a task under 20 lines of code.
