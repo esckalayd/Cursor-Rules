@@ -256,7 +256,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 - [Network Troubleshooting](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/network-troubleshoot.mdc) - Safety-first diagnostics for developer network failures with target-scoped checks, TLS and proxy guardrails, and user-approved remediation.
 - [Optimize (DRY, SOLID Principles)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/optimize-dry-solid-principles-cursorrules-prompt-f.mdc) - Optimization development with DRY and SOLID principles integration.
 - [Project Epic Template](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/project-epic-template-cursorrules-prompt-file.mdc) - Project development with epic template integration.
-- [PR Viz (GitHub Pull Request Review Maps)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/pr-viz-github-pr-review-maps.mdc) - Local-first `/pr-viz` skill for Cursor: turns a GitHub PR into an interactive two-zone review map (needs-review + AI-accepted) on a self-hosted viewer — not Mermaid in chat. Skill: [krzysztofgibert/pr-viz-skill](https://github.com/krzysztofgibert/pr-viz-skill).
+- [PR Viz (GitHub Pull Request Review Maps)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/pr-viz-github-pr-review-maps.mdc) - Cursor rule that routes PR visualize/map requests to the `/pr-viz` Agent Skill: interactive two-zone review map instead of Mermaid or ASCII in chat.
 - [Python Containerization](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/python-containerization-cursorrules-prompt-file.mdc) - Python development with containerization integration.
 - [Python (GitHub Setup)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/python-github-setup-cursorrules-prompt-file.mdc) - Python development with GitHub setup integration.
 - [ROS / ROS2](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/ros-ros2.mdc) - ROS and ROS2 packages, nodes, launch files, messages, services, actions, simulation, and testing.
@@ -323,7 +323,6 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
-- [PR Viz](https://pr-viz.com) — local-first GitHub PR review maps (`/pr-viz` skill: [krzysztofgibert/pr-viz-skill](https://github.com/krzysztofgibert/pr-viz-skill))
 
 ## How to Use
 
