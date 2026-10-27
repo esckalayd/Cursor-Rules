@@ -322,6 +322,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 - [CursorList](https://cursorlist.com)
 - [CursorDirectory](https://cursor.directory/)
+- [Awesome AI Coding Tools](https://github.com/mahmoudsajjadi/awesome-ai-coding-tools) - Curated catalog of coding agents, prompt rules (.cursorrules, CLAUDE.md, AGENTS.md), MCP servers, and local GPU VRAM calculators
 
 ## How to Use
 
