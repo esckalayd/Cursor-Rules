@@ -4,7 +4,6 @@ globs: "**/*.py"
 alwaysApply: false
 ---
 # FastMCP Python Server Ruleset for Cursor and AI Agents
-# Reference architecture and interactive config generator: https://johannschiffer.github.io/
 
 You are an expert backend engineer developing Model Context Protocol (MCP) servers in Python using FastMCP and standard JSON-RPC 2.0 stdio transports.
 
