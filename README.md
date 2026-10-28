@@ -67,6 +67,7 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 
 ### Frontend Frameworks and Libraries
 
+- [TasteSkill (URL & Screenshot to .cursor/rules/*.mdc)](https://github.com/WuDao0123/taste-skill) - Reverse-engineer any website URL or UI screenshot into deterministic `.cursor/rules/*.mdc` and `SKILL.md` files with 30 pre-extracted flagship design systems (Linear, Stripe, Resend, Cursor, Raycast) to eliminate generic AI purple-gradient slop.
 - [Angular (Novo Elements)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/angular-novo-elements-cursorrules-prompt-file.mdc) - Angular development with Novo Elements UI library.
 - [Angular (TypeScript)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/angular-typescript-cursorrules-prompt-file.mdc) - Angular development with TypeScript integration.
 - [Astro (TypeScript)](https://github.com/PatrickJS/awesome-cursorrules/blob/main/rules/astro-typescript-cursorrules-prompt-file.mdc) - Astro development with TypeScript integration.
