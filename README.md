@@ -333,6 +333,8 @@ By adding selected `.mdc` files to `.cursor/rules/`, you can use these rules dir
 4. Copy the chosen `.mdc` file into `.cursor/rules/`.
 5. Customize the rule as needed for your specific project requirements.
 
+- [ai-coding-rules](https://github.com/aixisstudio/ai-coding-rules) - Cursor rules, CLAUDE.md, AGENTS.md & windsurf config templates by stack.
+
 ## Contributing
 
 Contributions are welcome! If you have a great Cursor rule to share:
